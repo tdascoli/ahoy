@@ -61,7 +61,7 @@ public class ProfileViewModel extends AndroidViewModel {
                 birthday.getValue(),
                 mobile.getValue(),
                 email.getValue());
-        prefs.edit().putString(SEC_AHOY_PROFILE, profile.toJson()).apply();
+        prefs.edit().putString(SEC_AHOY_PROFILE, AhoyProfile.toJson(profile)).apply();
     }
 
     public void loadProfile(){

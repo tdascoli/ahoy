@@ -1,19 +1,43 @@
 package com.apollo29.ahoy.data;
 
 import com.google.gson.Gson;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.Objects;
 
 public class AhoyProfile {
 
-    private final String firstname;
-    private final String lastname;
-    private final String address;
-    private final String birthday;
-    private final String mobile;
-    private final String email;
+    @SerializedName("firstname")
+    @Expose
+    public String firstname;
+
+    @SerializedName("lastname")
+    @Expose
+    public String lastname;
+
+    @SerializedName("address")
+    @Expose
+    public String address;
+
+    @SerializedName("birthday")
+    @Expose
+    public String birthday;
+
+    @SerializedName("mobile")
+    @Expose
+    public String mobile;
+
+    @SerializedName("email")
+    @Expose
+    public String email;
+
+    public AhoyProfile(){
+
+    }
 
     public AhoyProfile(String firstname, String lastname, String address, String birthday, String mobile, String email) {
+        super();
         this.firstname = firstname;
         this.lastname = lastname;
         this.address = address;
@@ -64,8 +88,20 @@ public class AhoyProfile {
         return Objects.hash(firstname, lastname, address, birthday, mobile, email);
     }
 
-    public String toJson(){
-        return new Gson().toJson(this);
+    @Override
+    public String toString() {
+        return "AhoyProfile{" +
+                "firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", address='" + address + '\'' +
+                ", birthday='" + birthday + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
+
+    public static String toJson(AhoyProfile profile){
+        return new Gson().toJson(profile, AhoyProfile.class);
     }
 
     public static AhoyProfile fromJson(String json){

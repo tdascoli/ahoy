@@ -7,12 +7,14 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.apollo29.ahoy.R;
+import com.apollo29.ahoy.databinding.OnboardingProfileFragmentBinding;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.textfield.TextInputEditText;
@@ -29,7 +31,10 @@ public class OnboardingProfileFragment extends Fragment {
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
 
         viewModel = new ViewModelProvider(requireActivity()).get(OnboardingViewModel.class);
-        return inflater.inflate(R.layout.onboarding_profile_fragment, container, false);
+        OnboardingProfileFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.onboarding_profile_fragment, container, false);
+        binding.setLifecycleOwner(getViewLifecycleOwner());
+        binding.setViewModel(viewModel);
+        return binding.getRoot();
     }
 
     @Override

@@ -15,6 +15,7 @@ import com.apollo29.ahoy.comm.ProfileRepository;
 import com.apollo29.ahoy.comm.profile.Profile;
 import com.apollo29.ahoy.data.AhoyProfile;
 import com.apollo29.ahoy.repository.PreferencesRepository;
+import com.orhanobut.logger.Logger;
 
 import net.andreinc.mockneat.MockNeat;
 
@@ -77,7 +78,9 @@ public class OnboardingViewModel extends AndroidViewModel {
                 birthday.getValue(),
                 mobile.getValue(),
                 email.getValue());
-        prefs.edit().putString(SEC_AHOY_PROFILE, profile.toJson()).apply();
+        Logger.d(profile.toString());
+        Logger.d("AHOY PROFILE %s", AhoyProfile.toJson(profile));
+        prefs.edit().putString(SEC_AHOY_PROFILE, AhoyProfile.toJson(profile)).apply();
     }
 
     public LiveData<Boolean> hasProfile(){
