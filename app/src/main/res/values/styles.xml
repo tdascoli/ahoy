@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="AhoyTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Colour -->
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+        <item name="colorAccent">@color/secondaryColor</item>
+
+        <!-- Typography -->
+        <item name="android:font">@font/inter</item>
+        <item name="fontFamily">@font/inter</item>
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+
+        <item name="textAppearanceHeadline1">@style/AhoyTheme.Typography.Headline1</item>
+        <item name="textAppearanceHeadline2">@style/AhoyTheme.Typography.Headline2</item>
+        <item name="textAppearanceHeadline3">@style/AhoyTheme.Typography.Headline3</item>
+        <item name="textAppearanceHeadline4">@style/AhoyTheme.Typography.Headline4</item>
+        <item name="textAppearanceHeadline5">@style/AhoyTheme.Typography.Headline5</item>
+        <item name="textAppearanceHeadline6">@style/AhoyTheme.Typography.Headline6</item>
+
+        <item name="textAppearanceSubtitle1">@style/AhoyTheme.Typography.Subtitle1</item>
+        <item name="textAppearanceSubtitle2">@style/AhoyTheme.Typography.Subtitle2</item>
+
+        <item name="textAppearanceBody1">@style/AhoyTheme.Typography.Body1</item>
+        <item name="textAppearanceBody2">@style/AhoyTheme.Typography.Body2</item>
+
+        <item name="textAppearanceCaption">@style/AhoyTheme.Typography.Caption</item>
+        <item name="textAppearanceButton">@style/AhoyTheme.Typography.Button</item>
+        <item name="textAppearanceOverline">@style/AhoyTheme.Typography.Overline</item>
+
+        <!-- Status Bar -->
+        <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="o_mr1">shortEdges</item>
+        <item name="android:statusBarColor">@color/homeColor</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+        <!-- Textfields -->
+        <item name="textInputStyle">@style/AhoyTheme.Textfield</item>
+
+        <!-- FAB -->
+        <item name="floatingActionButtonStyle">@style/AhoyTheme.FAB</item>
+    </style>
+
+
+    <!-- Base application theme. -->
+    <style name="AhoyTheme.Home" parent="AhoyTheme">
+        <item name="background">@color/homeColor</item>
+        <item name="android:statusBarColor">@color/homeColor</item>
+    </style>
+
+    <!--
+    #Textfields
+    -->
+    <style name="AhoyTheme.Textfield" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
+
+    <!--
+    #FAB
+    -->
+    <style name="AhoyTheme.FAB" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="backgroundTint">@color/primaryColor</item>
+        <item name="iconTint">@color/secondaryTextColor</item>
+    </style>
+
+</resources>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_main"
+        android:enabled="true"
+        android:icon="@drawable/ic_anker"
+        android:title="@string/main_home_nav_title"/>
+    <item
+        android:id="@+id/nav_events"
+        android:enabled="true"
+        android:icon="@drawable/ic_liste"
+        android:title="@string/main_events_nav_title"/>
+    <item
+        android:id="@+id/nav_onboarding_welcome"
+        android:enabled="true"
+        android:icon="@drawable/ic_matrosenhut"
+        android:title="@string/main_profile_nav_title"/>
+    <item
+        android:id="@+id/nav_onboarding_profile"
+        android:enabled="true"
+        android:icon="@drawable/ic_rettungsring"
+        android:title="@string/main_about_nav_title"/>
+</menu>

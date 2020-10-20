@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@+id/nav_onboarding_welcome"
+    tools:ignore="UnusedNavigation">
+
+    <fragment
+        android:id="@+id/nav_main"
+        android:name="com.apollo29.ahoy.view.main.MainFragment"
+        android:label="@string/main_home_nav_title"
+        tools:layout="@layout/home_fragment"/>
+
+    <fragment
+        android:id="@+id/nav_events"
+        android:name="com.apollo29.ahoy.view.events.EventsFragment"
+        android:label="@string/main_events_nav_title"
+        tools:layout="@layout/onboarding_welcome_fragment" />
+
+    <fragment
+        android:id="@+id/nav_create_event"
+        android:name="com.apollo29.ahoy.view.events.event.CreateEventFragment"
+        android:label="@string/events_create_title"
+        tools:layout="@layout/create_event_fragment" />
+
+    <!-- ONBOARDING -->
+
+    <fragment
+        android:id="@+id/nav_onboarding_welcome"
+        android:name="com.apollo29.ahoy.view.onboarding.OnboardingWelcomeFragment"
+        android:label="@string/onboarding_welcome_nav_title"
+        tools:layout="@layout/onboarding_welcome_fragment" />
+
+    <fragment
+        android:id="@+id/nav_onboarding_profile"
+        android:name="com.apollo29.ahoy.view.onboarding.OnboardingProfileFragment"
+        android:label="@string/onboarding_profile_nav_title"
+        tools:layout="@layout/onboarding_profile_fragment" />
+
+</navigation>

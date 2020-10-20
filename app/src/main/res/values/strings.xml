@@ -1,0 +1,56 @@
+<resources>
+    <string name="app_name">Ahoy!</string>
+
+    <!-- Basic -->
+    <string name="label_ok">OK</string>
+    <string name="label_cancel">Cancel</string>
+    <string name="label_quit">Quit</string>
+    <string name="label_back">Back</string>
+    <string name="label_next">Next</string>
+    <string name="label_finish">Finish</string>
+    <string name="label_confirm">Confirm</string>
+    <string name="label_start">Let\'s start</string>
+
+    <!-- Onboarding: Welcome -->
+    <string name="onboarding_welcome_nav_title">Welcome</string>
+    <string name="onboarding_welcome_title">Ahoy!</string>
+
+
+    <!-- Onboarding: Profile -->
+    <string name="onboarding_profile_nav_title">Setup Profile</string>
+    <string name="onboarding_profile_title">Setup Profile</string>
+    <string name="onboarding_profile_form_firstname">First Name</string>
+    <string name="onboarding_profile_form_lastname">Last Name</string>
+    <string name="onboarding_profile_form_address">Address</string>
+    <string name="onboarding_profile_form_birthday">Birthday</string>
+    <string name="onboarding_profile_form_mobile">Mobile</string>
+    <string name="onboarding_profile_form_email">Email</string>
+
+
+    <!-- Main: Home -->
+    <string name="main_home_nav_title">Home</string>
+    <string name="main_home_title">Ahoy!</string>
+
+
+    <!-- Main: Events -->
+    <string name="main_events_nav_title">Events</string>
+    <string name="main_events_title">Current and past Events</string>
+
+    <!-- Events: Create Event -->
+    <string name="events_create_nav_title">Event</string>
+    <string name="events_create_title">New Event</string>
+
+    <string name="events_create_form_title">Title</string>
+    <string name="events_create_form_date">Event date</string>
+    <string name="events_create_form_button_create">Create</string>
+
+
+    <!-- Main: Profile -->
+    <string name="main_profile_nav_title">Profile</string>
+    <string name="main_profile_title">My Profile</string>
+
+
+    <!-- Main: About -->
+    <string name="main_about_nav_title">About</string>
+    <string name="main_about_title">About: Ahoy!</string>
+</resources>
