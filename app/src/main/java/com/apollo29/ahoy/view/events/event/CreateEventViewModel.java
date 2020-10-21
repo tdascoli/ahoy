@@ -1,37 +1,46 @@
 package com.apollo29.ahoy.view.events.event;
 
-import android.annotation.SuppressLint;
 import android.app.Application;
-import android.content.SharedPreferences;
-import android.provider.Settings;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.LiveDataReactiveStreams;
 import androidx.lifecycle.MutableLiveData;
 
+import com.apollo29.ahoy.AhoyApplication;
 import com.apollo29.ahoy.comm.EventRepository;
 import com.apollo29.ahoy.comm.event.Event;
+import com.apollo29.ahoy.data.repository.DatabaseRepository;
 import com.apollo29.ahoy.repository.AuthenticationRepository;
-import com.apollo29.ahoy.repository.PreferencesRepository;
+import com.apollo29.ahoy.repository.ProfileRepository;
 import com.orhanobut.logger.Logger;
 
-import io.reactivex.rxjava3.core.Single;
+import net.andreinc.mockneat.MockNeat;
 
-import static com.apollo29.ahoy.repository.PreferencesRepository.SEC_PROFILE_ID;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.processors.BehaviorProcessor;
 
 public class CreateEventViewModel extends AndroidViewModel {
 
     private final MutableLiveData<String> title = new MutableLiveData<>();
     private final MutableLiveData<String> date = new MutableLiveData<>();
-    private final SharedPreferences prefs;
-    private final String deviceId;
+    private final BehaviorProcessor<Long> timestamp = BehaviorProcessor.createDefault(0L);
 
-    @SuppressLint("HardwareIds")
+    private final SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
+    private final MockNeat random = MockNeat.secure();
+
+    private final ProfileRepository profileRepository;
+    private final DatabaseRepository databaseRepository;
+
     public CreateEventViewModel(Application application) {
         super(application);
-        prefs = PreferencesRepository.prefs(getApplication());
-        deviceId = Settings.Secure.getString(application.getContentResolver(), Settings.Secure.ANDROID_ID);
+        profileRepository = new ProfileRepository(getApplication());
+        databaseRepository = ((AhoyApplication) application).getRepository();
     }
 
     public MutableLiveData<String> getTitle() {
@@ -42,17 +51,28 @@ public class CreateEventViewModel extends AndroidViewModel {
         return date;
     }
 
+    public LiveData<Boolean> isValid(){
+        return LiveDataReactiveStreams.fromPublisher(timestamp.map(timestamp -> {
+            return timestamp>0;
+        }));
+    }
+
+    public void setDate(Long timestamp){
+        Date date = new Date(timestamp);
+        this.timestamp.onNext(TimeUnit.MILLISECONDS.toSeconds(timestamp));
+        Logger.d("TIME %s", timestamp);
+        this.date.setValue(formatter.format(date));
+    }
+
     public LiveData<Event> createEvent(){
         String title = this.title.getValue();
-        String date = this.date.getValue();
-        int profileId = prefs.getInt(SEC_PROFILE_ID, 0);
+        int profileId = profileRepository.profileId();
         if (profileId!=0){
-            // todo finalize
-            Event event = Event.of(title, profileId, "secret", 0);
-
-            return LiveDataReactiveStreams.fromPublisher(AuthenticationRepository.authToken(deviceId, prefs).flatMap(authToken -> {
+            Event event = Event.of(title, profileId, random.passwords().strong().get(), timestamp.getValue());
+            return LiveDataReactiveStreams.fromPublisher(AuthenticationRepository.authToken(profileRepository.deviceId(), profileRepository.preferences()).flatMap(authToken -> {
                 if (authToken.isPresent()) {
-                    return EventRepository.putEvent(authToken.get(), event);
+                    return EventRepository.putEvent(authToken.get(), event).flatMap(finalEvent ->
+                            databaseRepository.putEvent(finalEvent).andThen(Single.just(finalEvent)));
                 }
                 Logger.w("NO AUTH TOKEN");
                 return Single.just(Event.empty());

@@ -12,14 +12,15 @@ import com.orhanobut.logger.Logger;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
-public class PreferencesRepository {
+class PreferencesRepository {
 
     private static final String SEC_PREF = "ahoy_preferences";
 
-    public static final String SEC_AHOY_PROFILE = "profile";
-    public static final String SEC_AUTH_TOKEN = "auth_token";
-    public static final String SEC_PROFILE_ID = "profile_id";
-    public static final String SEC_PROFILE_SECRET = "profile_password";
+    static final String SEC_AHOY_PROFILE = "profile";
+    static final String SEC_AUTH_TOKEN = "auth_token";
+    static final String SEC_PROFILE_ID = "profile_id";
+    static final String SEC_PROFILE_SECRET = "profile_password";
+    static final String SEC_PROFILE_SECRET_EMPTY = "NONE";
 
     public static SharedPreferences prefs(Context context) {
         try {

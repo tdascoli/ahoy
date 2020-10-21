@@ -44,6 +44,7 @@ public class ProfileFragment extends Fragment {
                 .setInputMode(MaterialDatePicker.INPUT_MODE_TEXT)
                 .setTitleText(R.string.onboarding_profile_form_birthday)
                 .build();
+        dialog.addOnPositiveButtonClickListener(selection -> viewModel.setDate(selection));
         TextInputEditText date = view.findViewById(R.id.birthday_input);
         date.setOnFocusChangeListener((view1, b) -> {
             dialog.showNow(getParentFragmentManager(),"dialog");

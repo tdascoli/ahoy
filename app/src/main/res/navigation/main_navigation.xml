@@ -23,6 +23,21 @@
         android:label="@string/events_create_title"
         tools:layout="@layout/create_event_fragment" />
 
+    <fragment
+        android:id="@+id/nav_register_event"
+        android:name="com.apollo29.ahoy.view.events.register.RegisterManuallyFragment"
+        android:label="@string/events_create_title"
+        tools:layout="@layout/register_manually_fragment">
+        <argument
+            android:name="registerManually"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <argument
+            android:name="eventId"
+            app:argType="integer"
+            android:defaultValue="0"/>
+    </fragment>
+
     <!-- ONBOARDING -->
 
     <fragment

@@ -10,23 +10,31 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="62dp">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:id="@+id/profile_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="16dp"
             android:orientation="vertical"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/ahoy_description"
+                android:id="@+id/register_event_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="8dp"
-                android:text="This is a long description"
+                android:text="@string/onboarding_profile_title"
+                style="?attr/textAppearanceHeadline5" />
+
+            <TextView
+                android:id="@+id/profile_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="8dp"
+                android:text="@string/onboarding_profile_description"
                 style="?attr/textAppearanceBody1" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -38,6 +46,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:singleLine="true"
                     android:text="@={viewModel.firstname}"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -50,6 +59,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:singleLine="true"
                     android:text="@={viewModel.lastname}"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -78,6 +88,7 @@
                     android:focusableInTouchMode="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:singleLine="true"
                     android:text="@={viewModel.birthday}"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -91,6 +102,7 @@
                     android:inputType="phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:singleLine="true"
                     android:text="@={viewModel.mobile}"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -104,6 +116,7 @@
                     android:inputType="textEmailAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:singleLine="true"
                     android:text="@={viewModel.email}"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -115,6 +128,7 @@
             android:layout_height="wrap_content"
             android:padding="16dp"
             android:elevation="8dp"
+            android:background="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent">
 
             <com.google.android.material.button.MaterialButton

@@ -1,4 +1,4 @@
-package com.apollo29.ahoy.view.events.event;
+package com.apollo29.ahoy.view.events.register;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,12 +15,15 @@ import androidx.navigation.Navigation;
 
 import com.apollo29.ahoy.R;
 import com.apollo29.ahoy.databinding.CreateEventFragmentBinding;
+import com.apollo29.ahoy.view.events.event.CreateEventViewModel;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.textfield.TextInputEditText;
 import com.orhanobut.logger.Logger;
 
-public class CreateEventFragment extends Fragment {
+public class RegisterEventFragment extends Fragment {
+
+    // SCANNING
 
     private NavController navController;
     private CreateEventViewModel viewModel;

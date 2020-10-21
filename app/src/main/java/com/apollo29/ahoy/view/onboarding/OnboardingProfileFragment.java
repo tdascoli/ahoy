@@ -29,7 +29,6 @@ public class OnboardingProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
-
         viewModel = new ViewModelProvider(requireActivity()).get(OnboardingViewModel.class);
         OnboardingProfileFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.onboarding_profile_fragment, container, false);
         binding.setLifecycleOwner(getViewLifecycleOwner());
@@ -44,10 +43,9 @@ public class OnboardingProfileFragment extends Fragment {
                 .setInputMode(MaterialDatePicker.INPUT_MODE_TEXT)
                 .setTitleText(R.string.onboarding_profile_form_birthday)
                 .build();
+        dialog.addOnPositiveButtonClickListener(selection -> viewModel.setDate(selection));
         TextInputEditText date = view.findViewById(R.id.birthday_input);
-        date.setOnClickListener(view1 -> {
-            dialog.showNow(getParentFragmentManager(),"dialog");
-        });
+        date.setOnClickListener(view1 -> dialog.showNow(getParentFragmentManager(),"dialog"));
 
         MaterialButton startButton = view.findViewById(R.id.flow_next);
         startButton.setOnClickListener(v -> {

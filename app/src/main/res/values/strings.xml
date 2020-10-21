@@ -7,18 +7,23 @@
     <string name="label_quit">Quit</string>
     <string name="label_back">Back</string>
     <string name="label_next">Next</string>
+    <string name="label_register">Register</string>
     <string name="label_finish">Finish</string>
     <string name="label_confirm">Confirm</string>
+    <string name="label_reset">Reset</string>
+    <string name="label_update">Update</string>
     <string name="label_start">Let\'s start</string>
 
     <!-- Onboarding: Welcome -->
     <string name="onboarding_welcome_nav_title">Welcome</string>
     <string name="onboarding_welcome_title">Ahoy!</string>
+    <string name="onboarding_welcome_subtitle">Stop infection chains - start contact tracing.</string>
 
 
     <!-- Onboarding: Profile -->
     <string name="onboarding_profile_nav_title">Setup Profile</string>
     <string name="onboarding_profile_title">Setup Profile</string>
+    <string name="onboarding_profile_description">With your profile, you can quickly and safely join other "Ahoy!" events quickly and securely.\nYou can also skip this step and fill it out later. Your data will not be passed on to third parties or used in any other way - it will remain stored in your app on your device for the entire time.</string>
     <string name="onboarding_profile_form_firstname">First Name</string>
     <string name="onboarding_profile_form_lastname">Last Name</string>
     <string name="onboarding_profile_form_address">Address</string>
@@ -30,6 +35,10 @@
     <!-- Main: Home -->
     <string name="main_home_nav_title">Home</string>
     <string name="main_home_title">Ahoy!</string>
+    <string name="main_home_logo_image">Ahoy! Logo</string>
+
+    <string name="main_home_event_qrcode_image">QRCode with URL to register for Event</string>
+    <string name="main_home_event_add_manually">Add manually</string>
 
 
     <!-- Main: Events -->
@@ -39,11 +48,18 @@
     <!-- Events: Create Event -->
     <string name="events_create_nav_title">Event</string>
     <string name="events_create_title">New Event</string>
-
     <string name="events_create_form_title">Title</string>
     <string name="events_create_form_date">Event date</string>
     <string name="events_create_form_button_create">Create</string>
 
+    <!-- Events: Register Event -->
+    <string name="events_register_event_nav_title">Register Event</string>
+    <string name="events_register_event_title">Register yourself for "%1$s"</string>
+
+    <!-- Events: Register Manually -->
+    <string name="events_register_manually_nav_title">Register Manually</string>
+    <string name="events_register_manually_title">Manually Register for "%1$s"</string>
+    <string name="events_register_consent">By clicking on "Register", you agree that your data will be sent to the organizer of this event. Your data will be deleted automatically by the app after 14 days. Your data will also not be passed on to third parties or used in any other way.</string>
 
     <!-- Main: Profile -->
     <string name="main_profile_nav_title">Profile</string>

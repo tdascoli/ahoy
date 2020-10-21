@@ -22,7 +22,7 @@ public class AhoyProfile {
 
     @SerializedName("birthday")
     @Expose
-    public String birthday;
+    public Long birthday;
 
     @SerializedName("mobile")
     @Expose
@@ -36,7 +36,7 @@ public class AhoyProfile {
 
     }
 
-    public AhoyProfile(String firstname, String lastname, String address, String birthday, String mobile, String email) {
+    public AhoyProfile(String firstname, String lastname, String address, Long birthday, String mobile, String email) {
         super();
         this.firstname = firstname;
         this.lastname = lastname;
@@ -58,7 +58,7 @@ public class AhoyProfile {
         return address;
     }
 
-    public String getBirthday() {
+    public Long getBirthday() {
         return birthday;
     }
 

@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
@@ -31,17 +30,13 @@ import me.ibrahimsn.lib.SmoothBottomBar;
 public class MainFragment extends Fragment {
 
     private NavController navController;
-    private MainViewModel viewModel;
     private SmoothBottomBar bottomBar;
-
-    private FragmentStateAdapter pagerAdapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
-        viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         return inflater.inflate(R.layout.main_fragment, container, false);
     }
 
@@ -69,7 +64,7 @@ public class MainFragment extends Fragment {
                 new EventsFragment(),
                 new ProfileFragment(),
                 new AboutFragment());
-        pagerAdapter = new PagerAdapter(requireActivity(), fragments);
+        FragmentStateAdapter pagerAdapter = new PagerAdapter(requireActivity(), fragments);
         viewPager.setAdapter(pagerAdapter);
         viewPager.setUserInputEnabled(false); // todo to disable sync with bottombar!!
     }

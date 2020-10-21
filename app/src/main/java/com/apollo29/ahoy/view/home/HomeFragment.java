@@ -4,19 +4,23 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.apollo29.ahoy.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+
+import static android.provider.CalendarContract.Instances.EVENT_ID;
+import static com.apollo29.ahoy.view.events.register.RegisterManuallyFragment.REGISTER_MANUALLY;
 
 public class HomeFragment extends Fragment {
 
@@ -34,7 +38,29 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        FloatingActionButton createEvent = view.findViewById(R.id.create_event);
+        MaterialCardView currentEvent = view.findViewById(R.id.current_event);
+        viewModel.currentEvent().observe(getViewLifecycleOwner(), maybeEvent -> {
+            if (maybeEvent.isPresent()){
+                ImageView qrcode = view.findViewById(R.id.event_qrcode);
+                qrcode.setImageBitmap(viewModel.qrcode("https://apollo29.com/ahoy/"+maybeEvent.get().uid));
+
+                TextView eventTitle = view.findViewById(R.id.event_title);
+                eventTitle.setText(maybeEvent.get().title);
+
+                MaterialButton registerManually = view.findViewById(R.id.event_register_manually);
+                registerManually.setOnClickListener(view1 -> {
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean(REGISTER_MANUALLY, true);
+                    bundle.putInt(EVENT_ID, maybeEvent.get().uid);
+                    navController.navigate(R.id.nav_register_event, bundle);
+                });
+            }
+            currentEvent.setVisibility((maybeEvent.isPresent() ? View.VISIBLE : View.GONE));
+        });
+
+        ExtendedFloatingActionButton createEvent = view.findViewById(R.id.create_event);
         createEvent.setOnClickListener(v -> navController.navigate(R.id.nav_create_event));
+        viewModel.hasEvent().observe(getViewLifecycleOwner(), hasEvent ->
+                createEvent.setVisibility((hasEvent ? View.VISIBLE : View.GONE)));
     }
 }
