@@ -1,6 +1,5 @@
 package com.apollo29.ahoy.comm.event;
 
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.Index;
@@ -13,7 +12,7 @@ import java.io.Serializable;
 
 @Entity(tableName = "event",
         indices = {@Index("uid"), @Index("date")})
-public class Event implements Serializable {
+public class EventLight implements Serializable {
 
     @PrimaryKey
     @SerializedName("uid")
@@ -24,45 +23,29 @@ public class Event implements Serializable {
     @Expose
     public String title;
 
-    @ColumnInfo(name = "profile_id")
-    @SerializedName("profile_id")
-    @Expose
-    public Integer profileId;
-
-    @SerializedName("secret")
-    @Expose
-    public String secret;
-
     @SerializedName("date")
     @Expose
     public Long date;
 
-    @SerializedName("active")
-    @Expose
-    public int active;
-
     @Ignore
-    public Event(){
+    public EventLight(){
     }
 
-    public Event(int uid, String title, int profileId, String secret, Long date, int active) {
+    public EventLight(int uid, String title, Long date) {
         super();
         this.uid = uid;
         this.title = title;
-        this.profileId = profileId;
-        this.secret = secret;
         this.date = date;
-        this.active = active;
     }
 
     @Ignore
-    public static Event of(String title, int profileId, String secret, Long date){
-        return new Event(0, title, profileId, secret, date, 1);
+    public static EventLight of(String title, Long date){
+        return new EventLight(0, title, date);
     }
 
     @Ignore
-    public static Event empty(){
-        return new Event();
+    public static EventLight empty(){
+        return new EventLight();
     }
 
     @Ignore

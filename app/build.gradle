@@ -88,12 +88,14 @@ dependencies {
 
     // other
     implementation 'com.orhanobut:logger:2.2.0'
-    implementation 'com.github.tdascoli:Rx3Firebase:1.0.3'
     implementation 'com.github.ibrahimsn98:SmoothBottomBar:1.7.6'
     implementation 'net.andreinc.mockneat:mockneat:0.3.8'
     implementation 'at.favre.lib:bcrypt:0.9.0'
     implementation 'androidmads.library.qrgenearator:QRGenearator:1.0.4'
     implementation 'com.google.zxing:core:3.3.2'
+
+    // form validation
+    implementation 'com.github.Ilhasoft:data-binding-validator:2.0.0'
 }
 
 def createVersionCode(){

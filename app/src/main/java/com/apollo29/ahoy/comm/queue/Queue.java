@@ -11,9 +11,9 @@ public class Queue implements Serializable {
     @Expose
     public int uid;
 
-    @SerializedName("event_uid")
+    @SerializedName("event_id")
     @Expose
-    public int eventUid;
+    public int eventId;
 
     @SerializedName("firstname")
     @Expose
@@ -29,7 +29,7 @@ public class Queue implements Serializable {
 
     @SerializedName("birthday")
     @Expose
-    private int birthday;
+    private long birthday;
 
     @SerializedName("mobile")
     @Expose
@@ -41,7 +41,7 @@ public class Queue implements Serializable {
 
     @SerializedName("timestamp")
     @Expose
-    private int timestamp;
+    private long timestamp;
 
     /**
      * No args constructor for use in serialization
@@ -50,10 +50,10 @@ public class Queue implements Serializable {
     public Queue(){
     }
 
-    public Queue(int uid, int eventUid, String firstname, String lastname, String address, int birthday, String mobile, String email, int timestamp) {
+    public Queue(int uid, int eventId, String firstname, String lastname, String address, long birthday, String mobile, String email, long timestamp) {
         super();
         this.uid = uid;
-        this.eventUid = eventUid;
+        this.eventId = eventId;
         this.firstname = firstname;
         this.lastname = lastname;
         this.address = address;

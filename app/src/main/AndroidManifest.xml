@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.apollo29.ahoy">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".AhoyApplication"
         android:allowBackup="true"

@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,14 +15,23 @@ import androidx.navigation.Navigation;
 
 import com.apollo29.ahoy.R;
 import com.apollo29.ahoy.databinding.RegisterManuallyFragmentBinding;
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.orhanobut.logger.Logger;
+
+import br.com.ilhasoft.support.validation.Validator;
 
 public class RegisterManuallyFragment extends Fragment {
 
     private NavController navController;
     private RegisterViewModel viewModel;
+    private RegisterManuallyFragmentBinding binding;
+    private Validator validator;
 
     public final static String REGISTER_MANUALLY = "registerManually";
     public final static String EVENT_ID = "eventId";
+
+    private boolean registerManually = false;
+    private int eventId = 0;
 
     @Nullable
     @Override
@@ -31,38 +39,54 @@ public class RegisterManuallyFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
         viewModel = new ViewModelProvider(requireActivity()).get(RegisterViewModel.class);
-        RegisterManuallyFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.register_manually_fragment, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.register_manually_fragment, container, false);
         binding.setLifecycleOwner(getViewLifecycleOwner());
         binding.setViewModel(viewModel);
+        validator = new Validator(binding);
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        boolean registerManually = false;
-        int eventId = 0;
         if (getArguments()!=null){
             registerManually = RegisterManuallyFragmentArgs.fromBundle(getArguments()).getRegisterManually();
             eventId = RegisterManuallyFragmentArgs.fromBundle(getArguments()).getEventId();
         }
 
-        TextView title = view.findViewById(R.id.register_event_title);
-        if (registerManually){
-            title.setText(getString(R.string.events_register_manually_title, "test"));
-        }
-        else {
-            title.setText(getString(R.string.events_register_event_title, "test"));
-            // load profile
+        viewModel.getEvent(eventId).observe(getViewLifecycleOwner(), event -> {
+            if (!event.isEmpty()) {
+                viewModel.eventId(event.uid);
+                if (registerManually) {
+                     binding.registerEventTitle.setText(getString(R.string.events_register_manually_title, event.title));
+                } else {
+                    binding.registerEventTitle.setText(getString(R.string.events_register_event_title, event.title));
+                    viewModel.loadProfile();
+                }
+            }
+        });
 
-        }
-    }
+        MaterialDatePicker<Long> dialog = MaterialDatePicker.Builder
+                .datePicker()
+                .setInputMode(MaterialDatePicker.INPUT_MODE_TEXT)
+                .setTitleText(R.string.onboarding_profile_form_birthday)
+                .build();
+        dialog.addOnPositiveButtonClickListener(selection -> viewModel.setDate(selection));
+        binding.birthday.setOnClickListener(view1 -> {
+            Logger.d("CLICK CLICK");
+            dialog.showNow(getChildFragmentManager(),"dialog");
+        });
 
-    public static RegisterManuallyFragment newInstance(boolean registerManually, int eventId){
-        RegisterManuallyFragment fragment = new RegisterManuallyFragment();
-        Bundle bundle = new Bundle();
-        bundle.putBoolean(REGISTER_MANUALLY, registerManually);
-        bundle.putInt(EVENT_ID, eventId);
-        fragment.setArguments(bundle);
-        return fragment;
+        binding.flowRegister.setOnClickListener(view1 -> {
+            if (validator.validate()) {
+                viewModel.register().observe(getViewLifecycleOwner(), queue -> {
+                    // todo spinner etc
+                    navController.navigate(R.id.nav_main);
+                });
+            }
+        });
+
+        binding.flowCancel.setOnClickListener(view1 -> {
+            navController.navigate(R.id.nav_main);
+        });
     }
 }

@@ -8,7 +8,7 @@ import androidx.lifecycle.LiveDataReactiveStreams;
 import androidx.lifecycle.MutableLiveData;
 
 import com.apollo29.ahoy.AhoyApplication;
-import com.apollo29.ahoy.comm.EventRepository;
+import com.apollo29.ahoy.repository.EventRepository;
 import com.apollo29.ahoy.comm.event.Event;
 import com.apollo29.ahoy.data.repository.DatabaseRepository;
 import com.apollo29.ahoy.repository.AuthenticationRepository;

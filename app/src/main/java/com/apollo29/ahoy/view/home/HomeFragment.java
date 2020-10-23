@@ -19,7 +19,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
-import static android.provider.CalendarContract.Instances.EVENT_ID;
+import static com.apollo29.ahoy.view.events.register.RegisterManuallyFragment.EVENT_ID;
 import static com.apollo29.ahoy.view.events.register.RegisterManuallyFragment.REGISTER_MANUALLY;
 
 public class HomeFragment extends Fragment {

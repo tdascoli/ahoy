@@ -12,7 +12,10 @@ import retrofit2.http.Path;
 public interface EventService {
 
     @GET("event/{eventId}")
-    Maybe<Event> getEvent(@Header("Authorization") String token, @Path("eventId") String eventId);
+    Maybe<Event> getEvent(@Header("Authorization") String token, @Path("eventId") int eventId);
+
+    @GET("events/{eventId}")
+    Maybe<EventLight> getEventLight(@Path("eventId") int eventId);
 
     @Headers("Content-Type: application/json")
     @PUT("event")
