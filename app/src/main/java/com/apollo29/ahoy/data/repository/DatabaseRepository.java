@@ -1,6 +1,7 @@
 package com.apollo29.ahoy.data.repository;
 
 import com.apollo29.ahoy.comm.event.Event;
+import com.apollo29.ahoy.comm.queue.Queue;
 import com.apollo29.ahoy.data.AhoyDatabase;
 import com.orhanobut.logger.Logger;
 
@@ -36,6 +37,8 @@ public class DatabaseRepository {
         }
         return instance;
     }
+
+    // Event region
 
     public Completable putEvent(Event event){
         return database.ahoyDao().putEvent(event)
@@ -84,4 +87,28 @@ public class DatabaseRepository {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
+    // endregion
+
+    // Queue region
+
+    public Completable putQueue(Queue... queue){
+        return database.ahoyDao().putQueue(queue)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Flowable<List<Queue>> getQueuesByEventId(Integer eventId){
+        return database.ahoyDao().getQueuesByEventId(eventId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Completable removeQueue(int uid){
+        return database.ahoyDao().removeQueue(uid)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    // endregion
 }

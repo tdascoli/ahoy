@@ -24,6 +24,12 @@
         tools:layout="@layout/create_event_fragment" />
 
     <fragment
+        android:id="@+id/nav_scan_event"
+        android:name="com.apollo29.ahoy.view.scanning.ScanningFragment"
+        android:label="@string/main_home_event_scan_event"
+        tools:layout="@layout/scanning_fragment" />
+
+    <fragment
         android:id="@+id/nav_register_event"
         android:name="com.apollo29.ahoy.view.events.register.RegisterManuallyFragment"
         android:label="@string/events_create_title"
@@ -32,6 +38,17 @@
             android:name="registerManually"
             app:argType="boolean"
             android:defaultValue="false" />
+        <argument
+            android:name="eventId"
+            app:argType="integer"
+            android:defaultValue="0"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_events_guests"
+        android:name="com.apollo29.ahoy.view.events.guests.GuestsFragment"
+        android:label="@string/events_guests_nav_title"
+        tools:layout="@layout/events_fragment">
         <argument
             android:name="eventId"
             app:argType="integer"

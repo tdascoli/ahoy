@@ -92,8 +92,9 @@
                         android:focusableInTouchMode="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:singleLine="true"
-                        android:text="@={viewModel.birthday}"/>
+                        android:text="@={viewModel.birthday}"
+                        app:validateEmpty="@{true}"
+                        app:validateEmptyMessage="@{@string/error_required}"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout

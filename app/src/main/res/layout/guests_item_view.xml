@@ -17,7 +17,7 @@
         tools:ignore="UselessParent">
 
         <TextView
-            android:id="@+id/event_title"
+            android:id="@+id/guest_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
@@ -26,7 +26,7 @@
             style="?attr/textAppearanceSubtitle1"/>
 
         <TextView
-            android:id="@+id/event_date"
+            android:id="@+id/guest_email"
             android:layout_gravity="start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

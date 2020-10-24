@@ -12,7 +12,7 @@ import com.orhanobut.logger.Logger;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
-class PreferencesRepository {
+public class PreferencesRepository {
 
     private static final String SEC_PREF = "ahoy_preferences";
 
@@ -21,6 +21,8 @@ class PreferencesRepository {
     static final String SEC_PROFILE_ID = "profile_id";
     static final String SEC_PROFILE_SECRET = "profile_password";
     static final String SEC_PROFILE_SECRET_EMPTY = "NONE";
+
+    public static final String SEC_DB_SECRET = "db_secret";
 
     public static SharedPreferences prefs(Context context) {
         try {

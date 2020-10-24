@@ -16,7 +16,6 @@ import androidx.navigation.Navigation;
 import com.apollo29.ahoy.R;
 import com.apollo29.ahoy.databinding.RegisterManuallyFragmentBinding;
 import com.google.android.material.datepicker.MaterialDatePicker;
-import com.orhanobut.logger.Logger;
 
 import br.com.ilhasoft.support.validation.Validator;
 
@@ -53,6 +52,11 @@ public class RegisterManuallyFragment extends Fragment {
             eventId = RegisterManuallyFragmentArgs.fromBundle(getArguments()).getEventId();
         }
 
+        MaterialDatePicker.Builder<Long> builder = MaterialDatePicker.Builder
+                .datePicker()
+                .setInputMode(MaterialDatePicker.INPUT_MODE_TEXT)
+                .setTitleText(R.string.onboarding_profile_form_birthday);
+
         viewModel.getEvent(eventId).observe(getViewLifecycleOwner(), event -> {
             if (!event.isEmpty()) {
                 viewModel.eventId(event.uid);
@@ -61,24 +65,20 @@ public class RegisterManuallyFragment extends Fragment {
                 } else {
                     binding.registerEventTitle.setText(getString(R.string.events_register_event_title, event.title));
                     viewModel.loadProfile();
+                    builder.setSelection(viewModel.timestamp.getValue());
                 }
             }
         });
 
-        MaterialDatePicker<Long> dialog = MaterialDatePicker.Builder
-                .datePicker()
-                .setInputMode(MaterialDatePicker.INPUT_MODE_TEXT)
-                .setTitleText(R.string.onboarding_profile_form_birthday)
-                .build();
+        MaterialDatePicker<Long> dialog = builder.build();
         dialog.addOnPositiveButtonClickListener(selection -> viewModel.setDate(selection));
-        binding.birthday.setOnClickListener(view1 -> {
-            Logger.d("CLICK CLICK");
-            dialog.showNow(getChildFragmentManager(),"dialog");
+        binding.birthdayInput.setOnClickListener(view1 -> {
+            dialog.showNow(getParentFragmentManager(),"dialog");
         });
 
         binding.flowRegister.setOnClickListener(view1 -> {
             if (validator.validate()) {
-                viewModel.register().observe(getViewLifecycleOwner(), queue -> {
+                viewModel.register(registerManually).observe(getViewLifecycleOwner(), success -> {
                     // todo spinner etc
                     navController.navigate(R.id.nav_main);
                 });

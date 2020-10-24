@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
@@ -38,7 +39,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
-                    android:text="@={viewModel.firstname}"/>
+                    android:text="@={viewModel.firstname}"
+                    app:validateEmpty="@{true}"
+                    app:validateEmptyMessage="@{@string/error_required}"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -51,7 +54,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
-                    android:text="@={viewModel.lastname}"/>
+                    android:text="@={viewModel.lastname}"
+                    app:validateEmpty="@{true}"
+                    app:validateEmptyMessage="@{@string/error_required}"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -63,7 +68,9 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@={viewModel.address}"/>
+                    android:text="@={viewModel.address}"
+                    app:validateEmpty="@{true}"
+                    app:validateEmptyMessage="@{@string/error_required}"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -79,8 +86,9 @@
                     android:focusableInTouchMode="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:text="@={viewModel.birthday}"/>
+                    android:text="@={viewModel.birthday}"
+                    app:validateEmpty="@{true}"
+                    app:validateEmptyMessage="@{@string/error_required}"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -94,7 +102,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
-                    android:text="@={viewModel.mobile}"/>
+                    android:text="@={viewModel.mobile}"
+                    app:validateEmpty="@{true}"
+                    app:validateEmptyMessage="@{@string/error_phone}"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -108,7 +118,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
-                    android:text="@={viewModel.email}"/>
+                    android:text="@={viewModel.email}"
+                    app:validateType='@{"email"}'
+                    app:validateTypeMessage="@{@string/error_email}"/>
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>

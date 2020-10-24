@@ -11,6 +11,8 @@ import com.apollo29.ahoy.comm.profile.Profile;
 import com.apollo29.ahoy.comm.profile.ProfileService;
 import com.apollo29.ahoy.data.AhoyProfile;
 
+import java.util.Optional;
+
 import io.reactivex.rxjava3.core.Single;
 
 import static com.apollo29.ahoy.repository.PreferencesRepository.SEC_AHOY_PROFILE;
@@ -59,6 +61,10 @@ public class ProfileRepository {
 
     public SharedPreferences preferences(){
         return prefs;
+    }
+
+    public Single<Optional<String>> authToken(){
+        return AuthenticationRepository.authToken(deviceId, prefs);
     }
 
     public boolean hasAhoyProfile(){

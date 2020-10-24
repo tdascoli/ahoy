@@ -7,44 +7,44 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.apollo29.ahoy.R;
 import com.apollo29.ahoy.comm.event.Event;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
 
     private List<Event> events;
+    private final OnItemClickListener clickListener;
+    protected final SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
 
-    public EventAdapter(List<Event> events) {
+    public EventAdapter(List<Event> events, OnItemClickListener clickListener) {
         this.events = events;
+        this.clickListener = clickListener;
     }
 
-    // Usually involves inflating a layout from XML and returning the holder
     @Override
     @NonNull
     public EventAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-
-        // Inflate the custom layout
         View cardView = inflater.inflate(R.layout.events_item_view, parent, false);
-
-        // Return a new holder instance
         return new EventAdapter.ViewHolder(cardView);
     }
 
-    // Involves populating data into the item through holder
     @Override
     public void onBindViewHolder(EventAdapter.ViewHolder viewHolder, int position) {
         Event event = events.get(position);
 
         viewHolder.eventTitle.setText(event.title);
+        viewHolder.eventDate.setText(String.valueOf(event.date));
     }
 
-    // Returns the total count of items in the list
     @Override
     public int getItemCount() {
         return this.events.size();
@@ -55,15 +55,34 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         notifyDataSetChanged();
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    @Nullable
+    public Event getItem(int position){
+        return events.get(position);
+    }
+
+    public interface OnItemClickListener {
+        void onClick(View view, int position);
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView eventTitle;
-
+        public TextView eventDate;
+        public View clickableArea;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             this.eventTitle = itemView.findViewById(R.id.event_title);
+            this.eventDate = itemView.findViewById(R.id.event_date);
+            this.clickableArea = itemView.findViewById(R.id.list_item_clickable_area);
+            this.clickableArea.setOnClickListener(this);
+        }
+
+
+        @Override
+        public void onClick(View v) {
+            clickListener.onClick(v, getAdapterPosition());
         }
     }
 }

@@ -16,7 +16,7 @@ public class QueueRepository {
         return service.putQueue(eventId, queue);
     }
 
-    public static Single<List<Queue>> getEvent(String authToken, int eventId){
+    public static Single<List<Queue>> getQueuesByEventId(String authToken, int eventId){
         QueueService service = RetrofitClientInstance.getRetrofitInstance().create(QueueService.class);
         return service.getQueue(authToken, eventId);
     }

@@ -1,56 +1,63 @@
 package com.apollo29.ahoy.comm.queue;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.Index;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
+@Entity(tableName = "queue",
+        indices = {@Index("uid"), @Index("event_id")})
 public class Queue implements Serializable {
 
+    @PrimaryKey(autoGenerate = true)
     @SerializedName("uid")
     @Expose
-    public int uid;
+    public Integer uid;
 
     @SerializedName("event_id")
+    @ColumnInfo(name = "event_id")
     @Expose
-    public int eventId;
+    public Integer eventId;
 
     @SerializedName("firstname")
     @Expose
-    private String firstname;
+    public String firstname;
 
     @SerializedName("lastname")
     @Expose
-    private String lastname;
+    public String lastname;
 
     @SerializedName("address")
     @Expose
-    private String address;
+    public String address;
 
     @SerializedName("birthday")
     @Expose
-    private long birthday;
+    public long birthday;
 
     @SerializedName("mobile")
     @Expose
-    private String mobile;
+    public String mobile;
 
     @SerializedName("email")
     @Expose
-    private String email;
+    public String email;
 
     @SerializedName("timestamp")
     @Expose
-    private long timestamp;
+    public long timestamp;
 
-    /**
-     * No args constructor for use in serialization
-     *
-     */
+    @Ignore
     public Queue(){
     }
 
-    public Queue(int uid, int eventId, String firstname, String lastname, String address, long birthday, String mobile, String email, long timestamp) {
+    public Queue(Integer uid, Integer eventId, String firstname, String lastname, String address, long birthday, String mobile, String email, long timestamp) {
         super();
         this.uid = uid;
         this.eventId = eventId;

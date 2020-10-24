@@ -7,6 +7,7 @@ import androidx.room.Query;
 import androidx.room.Transaction;
 
 import com.apollo29.ahoy.comm.event.Event;
+import com.apollo29.ahoy.comm.queue.Queue;
 
 import java.util.List;
 
@@ -16,6 +17,8 @@ import io.reactivex.rxjava3.core.Single;
 
 @Dao
 public interface AhoyDao {
+
+    // Event region
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     Completable putEvent(Event event);
@@ -31,4 +34,20 @@ public interface AhoyDao {
     @Transaction
     @Query("SELECT * FROM event WHERE profile_id = :profileId AND date BETWEEN :startOfDay AND :endOfDay ORDER BY date")
     Single<List<Event>> getCurrentEvent(Integer profileId, Long startOfDay, Long endOfDay);
+
+    // endregion
+
+    // Queue region
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    Completable putQueue(Queue... queue);
+
+    @Transaction
+    @Query("SELECT * FROM queue WHERE event_id = :eventId ")
+    Flowable<List<Queue>> getQueuesByEventId(Integer eventId);
+
+    @Query("DELETE FROM queue WHERE uid = :uid")
+    Completable removeQueue(int uid);
+
+    // endregion
 }

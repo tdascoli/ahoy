@@ -1,9 +1,9 @@
 package com.apollo29.ahoy.data;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import androidx.annotation.VisibleForTesting;
-import androidx.lifecycle.MutableLiveData;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
@@ -11,24 +11,26 @@ import androidx.room.TypeConverters;
 
 import com.apollo29.ahoy.BuildConfig;
 import com.apollo29.ahoy.comm.event.Event;
+import com.apollo29.ahoy.comm.queue.Queue;
 import com.apollo29.ahoy.data.converter.DateConverter;
 import com.apollo29.ahoy.data.dao.AhoyDao;
+import com.apollo29.ahoy.repository.PreferencesRepository;
 
 import net.andreinc.mockneat.MockNeat;
 import net.sqlcipher.database.SQLiteDatabase;
 import net.sqlcipher.database.SupportFactory;
 
+import static com.apollo29.ahoy.repository.PreferencesRepository.SEC_DB_SECRET;
+
 @Database(entities = {
-            Event.class
+            Event.class,
+            Queue.class
         },
-        exportSchema = false,
         version = AhoyDatabase.VERSION)
 @TypeConverters(DateConverter.class)
 public abstract class AhoyDatabase extends RoomDatabase {
 
-    static final int VERSION = 1;
-    // todo change
-    private static final String PASSPHRASE = "test_passphrase";
+    static final int VERSION = 3;
 
     private static AhoyDatabase instance;
 
@@ -36,8 +38,6 @@ public abstract class AhoyDatabase extends RoomDatabase {
     public static final String DATABASE_NAME = "ahoy.db";
 
     public abstract AhoyDao ahoyDao();
-
-    private final MutableLiveData<Boolean> isDatabaseCreated = new MutableLiveData<>();
 
     public static AhoyDatabase getInstance(final Context context) {
         if (instance == null) {
@@ -67,10 +67,16 @@ public abstract class AhoyDatabase extends RoomDatabase {
     }
 
     private static AhoyDatabase buildSecuredDatabase(final Context appContext) {
-        final byte[] passphrase = SQLiteDatabase.getBytes(PASSPHRASE.toCharArray());
+        final byte[] passphrase = SQLiteDatabase.getBytes(passphrase(appContext).toCharArray());
         final SupportFactory factory = new SupportFactory(passphrase);
         return Room.databaseBuilder(appContext, AhoyDatabase.class, DATABASE_NAME)
                 .openHelperFactory(factory)
                 .build();
+    }
+
+    private static String passphrase(final Context context){
+        final MockNeat random = MockNeat.secure();
+        SharedPreferences sharedPreferences = PreferencesRepository.prefs(context);
+        return sharedPreferences.getString(SEC_DB_SECRET, random.passwords().strong().get());
     }
 }

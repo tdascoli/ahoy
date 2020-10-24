@@ -18,6 +18,7 @@ import com.apollo29.ahoy.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import static com.apollo29.ahoy.view.events.register.RegisterManuallyFragment.EVENT_ID;
 import static com.apollo29.ahoy.view.events.register.RegisterManuallyFragment.REGISTER_MANUALLY;
@@ -41,6 +42,8 @@ public class HomeFragment extends Fragment {
         MaterialCardView currentEvent = view.findViewById(R.id.current_event);
         viewModel.currentEvent().observe(getViewLifecycleOwner(), maybeEvent -> {
             if (maybeEvent.isPresent()){
+                //viewModel.enqueue();
+
                 ImageView qrcode = view.findViewById(R.id.event_qrcode);
                 qrcode.setImageBitmap(viewModel.qrcode("https://apollo29.com/ahoy/"+maybeEvent.get().uid));
 
@@ -54,6 +57,16 @@ public class HomeFragment extends Fragment {
                     bundle.putInt(EVENT_ID, maybeEvent.get().uid);
                     navController.navigate(R.id.nav_register_event, bundle);
                 });
+
+                MaterialButton guests = view.findViewById(R.id.event_participants);
+                guests.setOnClickListener(view1 -> {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(EVENT_ID, maybeEvent.get().uid);
+                    navController.navigate(R.id.nav_events_guests, bundle);
+                });
+            }
+            else {
+                //viewModel.dequeue();
             }
             currentEvent.setVisibility((maybeEvent.isPresent() ? View.VISIBLE : View.GONE));
         });
@@ -62,5 +75,10 @@ public class HomeFragment extends Fragment {
         createEvent.setOnClickListener(v -> navController.navigate(R.id.nav_create_event));
         viewModel.hasEvent().observe(getViewLifecycleOwner(), hasEvent ->
                 createEvent.setVisibility((hasEvent ? View.VISIBLE : View.GONE)));
+
+        FloatingActionButton scanEvent = view.findViewById(R.id.scan_event);
+        scanEvent.setOnClickListener(view1 -> {
+            navController.navigate(R.id.nav_scan_event);
+        });
     }
 }

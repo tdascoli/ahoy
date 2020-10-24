@@ -41,6 +41,8 @@
 
     <string name="main_home_event_qrcode_image">QRCode with URL to register for Event</string>
     <string name="main_home_event_add_manually">Add manually</string>
+    <string name="main_home_event_guests">Guests</string>
+    <string name="main_home_event_scan_event">Scan Event</string>
 
     <!-- Main: Events -->
     <string name="main_events_nav_title">Events</string>
@@ -61,6 +63,11 @@
     <string name="events_register_manually_nav_title">Register Manually</string>
     <string name="events_register_manually_title">Manually Register for "%1$s"</string>
     <string name="events_register_consent">By clicking on "Register", you agree that your data will be sent to the organizer of this event. Your data will be deleted automatically by the app after 14 days. Your data will also not be passed on to third parties or used in any other way.</string>
+
+    <!-- Events: Guests -->
+    <string name="events_guests_nav_title">Register Manually</string>
+    <string name="events_guests_title">Manually Register for "%1$s"</string>
+    <string name="events_guests_guest_name">%1$s %2$s</string>
 
     <!-- Main: Profile -->
     <string name="main_profile_nav_title">Profile</string>

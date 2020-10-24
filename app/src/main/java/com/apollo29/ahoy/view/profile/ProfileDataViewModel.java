@@ -23,7 +23,7 @@ public abstract class ProfileDataViewModel extends AndroidViewModel {
     protected final MutableLiveData<String> mobile = new MutableLiveData<>();
     protected final MutableLiveData<String> email = new MutableLiveData<>();
 
-    protected final BehaviorProcessor<Long> timestamp = BehaviorProcessor.createDefault(0L);
+    public final BehaviorProcessor<Long> timestamp = BehaviorProcessor.createDefault(0L);
     protected final SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
 
     public ProfileDataViewModel(@NonNull Application application) {

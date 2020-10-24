@@ -17,7 +17,7 @@ public class ProfileViewModel extends ProfileDataViewModel {
         this.profileRepository = new ProfileRepository(getApplication());
     }
 
-    public void storeProfile(){
+    public void updateProfile(){
         AhoyProfile profile = new AhoyProfile(
                 firstname.getValue(),
                 lastname.getValue(),

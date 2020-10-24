@@ -8,10 +8,10 @@ import androidx.lifecycle.LiveDataReactiveStreams;
 import androidx.lifecycle.MutableLiveData;
 
 import com.apollo29.ahoy.AhoyApplication;
-import com.apollo29.ahoy.repository.EventRepository;
 import com.apollo29.ahoy.comm.event.Event;
 import com.apollo29.ahoy.data.repository.DatabaseRepository;
 import com.apollo29.ahoy.repository.AuthenticationRepository;
+import com.apollo29.ahoy.repository.EventRepository;
 import com.apollo29.ahoy.repository.ProfileRepository;
 import com.orhanobut.logger.Logger;
 
@@ -51,16 +51,9 @@ public class CreateEventViewModel extends AndroidViewModel {
         return date;
     }
 
-    public LiveData<Boolean> isValid(){
-        return LiveDataReactiveStreams.fromPublisher(timestamp.map(timestamp -> {
-            return timestamp>0;
-        }));
-    }
-
     public void setDate(Long timestamp){
         Date date = new Date(timestamp);
         this.timestamp.onNext(TimeUnit.MILLISECONDS.toSeconds(timestamp));
-        Logger.d("TIME %s", timestamp);
         this.date.setValue(formatter.format(date));
     }
 

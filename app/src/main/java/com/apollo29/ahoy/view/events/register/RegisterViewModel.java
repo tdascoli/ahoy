@@ -6,9 +6,11 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.LiveDataReactiveStreams;
 
+import com.apollo29.ahoy.AhoyApplication;
 import com.apollo29.ahoy.comm.event.EventLight;
 import com.apollo29.ahoy.comm.queue.Queue;
 import com.apollo29.ahoy.data.AhoyProfile;
+import com.apollo29.ahoy.data.repository.DatabaseRepository;
 import com.apollo29.ahoy.repository.EventRepository;
 import com.apollo29.ahoy.repository.ProfileRepository;
 import com.apollo29.ahoy.repository.QueueRepository;
@@ -18,16 +20,19 @@ import com.orhanobut.logger.Logger;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.processors.BehaviorProcessor;
 
 public class RegisterViewModel extends ProfileDataViewModel {
 
     private final ProfileRepository profileRepository;
+    private final DatabaseRepository databaseRepository;
     private final BehaviorProcessor<Integer> eventId = BehaviorProcessor.createDefault(0);
 
     public RegisterViewModel(@NonNull Application application) {
         super(application);
-        this.profileRepository = new ProfileRepository(getApplication());
+        profileRepository = new ProfileRepository(getApplication());
+        databaseRepository = ((AhoyApplication) getApplication()).getRepository();
     }
 
     public LiveData<EventLight> getEvent(int eventId){
@@ -54,9 +59,9 @@ public class RegisterViewModel extends ProfileDataViewModel {
         this.eventId.onNext(eventId);
     }
 
-    public LiveData<Queue> register(){
+    public LiveData<Boolean> register(boolean registerManually){
         Date date = new Date();
-        Queue queue = new Queue(0,
+        Queue queue = new Queue(null,
                 eventId.getValue(),
                 firstname.getValue(),
                 lastname.getValue(),
@@ -65,6 +70,9 @@ public class RegisterViewModel extends ProfileDataViewModel {
                 mobile.getValue(),
                 email.getValue(),
                 TimeUnit.MILLISECONDS.toSeconds(date.getTime()));
-        return LiveDataReactiveStreams.fromPublisher(QueueRepository.putQueue(eventId.getValue(), queue).toFlowable());
+        if (registerManually){
+            return LiveDataReactiveStreams.fromPublisher(databaseRepository.putQueue(queue).andThen(Flowable.just(true)));
+        }
+        return LiveDataReactiveStreams.fromPublisher(QueueRepository.putQueue(eventId.getValue(), queue).toFlowable().map(q -> true));
     }
 }
