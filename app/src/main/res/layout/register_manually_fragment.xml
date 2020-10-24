@@ -10,7 +10,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/homeColor">
 
 
         <androidx.core.widget.NestedScrollView
@@ -136,7 +137,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="8dp"
                     android:text="@string/events_register_consent"
-                    style="?attr/textAppearanceBody1" />
+                    style="?attr/textAppearanceBody2" />
 
             </LinearLayout>
 

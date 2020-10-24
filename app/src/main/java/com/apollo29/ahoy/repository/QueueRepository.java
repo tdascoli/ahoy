@@ -1,7 +1,6 @@
 package com.apollo29.ahoy.repository;
 
 import com.apollo29.ahoy.comm.RetrofitClientInstance;
-import com.apollo29.ahoy.comm.event.EventLight;
 import com.apollo29.ahoy.comm.queue.Queue;
 import com.apollo29.ahoy.comm.queue.QueueService;
 

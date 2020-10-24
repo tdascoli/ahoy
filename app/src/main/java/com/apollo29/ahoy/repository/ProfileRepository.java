@@ -6,13 +6,19 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.provider.Settings;
 
+import com.apollo29.ahoy.AhoyApplication;
 import com.apollo29.ahoy.comm.RetrofitClientInstance;
 import com.apollo29.ahoy.comm.profile.Profile;
 import com.apollo29.ahoy.comm.profile.ProfileService;
+import com.apollo29.ahoy.comm.queue.Queue;
 import com.apollo29.ahoy.data.AhoyProfile;
+import com.apollo29.ahoy.data.repository.DatabaseRepository;
+import com.orhanobut.logger.Logger;
 
+import java.util.List;
 import java.util.Optional;
 
+import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
 
 import static com.apollo29.ahoy.repository.PreferencesRepository.SEC_AHOY_PROFILE;
@@ -23,11 +29,13 @@ import static com.apollo29.ahoy.repository.PreferencesRepository.SEC_PROFILE_SEC
 public class ProfileRepository {
 
     private final SharedPreferences prefs;
+    private final DatabaseRepository databaseRepository;
     private final String deviceId;
 
     @SuppressLint("HardwareIds")
     public ProfileRepository(Context context) {
         prefs = PreferencesRepository.prefs(context);
+        databaseRepository = ((AhoyApplication) context).getRepository();
         deviceId = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
     }
 
@@ -82,5 +90,25 @@ public class ProfileRepository {
     public static Single<Profile> putProfile(Profile profile){
         ProfileService service = RetrofitClientInstance.getRetrofitInstance().create(ProfileService.class);
         return service.putProfile(profile);
+    }
+
+    public Single<Boolean> updateQueue(int eventId){
+        return authToken().flatMap(authToken -> {
+            if (authToken.isPresent()){
+                return QueueRepository.getQueuesByEventId(authToken.get(), eventId)
+                        .doOnError(throwable -> Logger.w("Error while getting queue %s", throwable))
+                        .flatMap(queues ->
+                                databaseRepository.putQueue(queues.toArray(new Queue[0]))
+                                        .andThen(confirm(authToken.get(), queues)));
+            }
+            return Single.just(true);
+        });
+    }
+
+    private Single<Boolean> confirm(String authToken, List<Queue> queues){
+        return Flowable.fromIterable(queues).map(queue ->
+                QueueRepository.removeQueue(authToken, queue.uid))
+                .doOnError(throwable -> Logger.w("Error while removing queue %s", throwable))
+                .toList().map(singles -> true);
     }
 }

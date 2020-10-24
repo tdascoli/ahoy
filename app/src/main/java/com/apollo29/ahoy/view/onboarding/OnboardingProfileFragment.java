@@ -58,6 +58,11 @@ public class OnboardingProfileFragment extends Fragment {
                 navController.navigate(R.id.nav_main);
             }
         });
+
+        binding.flowSkip.setOnClickListener(v -> {
+            // todo add flag???
+            navController.navigate(R.id.nav_main);
+        });
     }
 
 }

@@ -40,7 +40,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="8dp"
                     android:text="@string/onboarding_profile_description"
-                    style="?attr/textAppearanceBody1" />
+                    style="?attr/textAppearanceBody2" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/firstname"
@@ -150,11 +150,10 @@
             app:layout_constraintBottom_toBottomOf="parent">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/flow_back"
+                android:id="@+id/flow_skip"
                 android:layout_width="128dp"
                 android:layout_height="wrap_content"
-                android:text="@string/label_back"
-                android:enabled="false"
+                android:text="@string/label_skip"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>

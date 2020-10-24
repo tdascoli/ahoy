@@ -13,17 +13,17 @@ import com.apollo29.ahoy.comm.queue.Queue;
 import com.apollo29.ahoy.data.repository.DatabaseRepository;
 import com.apollo29.ahoy.repository.ProfileRepository;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
+
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
 public class EventsViewModel extends AndroidViewModel {
 
-    private final SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
-
     private final ProfileRepository profileRepository;
     private final DatabaseRepository databaseRepository;
+    private final CompositeDisposable disposable = new CompositeDisposable();
 
     public EventsViewModel(Application application) {
         super(application);
@@ -41,5 +41,20 @@ public class EventsViewModel extends AndroidViewModel {
 
     public LiveData<List<Queue>> guests(int eventId){
         return LiveDataReactiveStreams.fromPublisher(databaseRepository.getQueuesByEventId(eventId));
+    }
+
+    public LiveData<Boolean> refreshData(int eventId){
+        return LiveDataReactiveStreams.fromPublisher(profileRepository.authToken().flatMap(authToken -> {
+                    if (authToken.isPresent()){
+                        return profileRepository.updateQueue(eventId).map(refreshing -> !refreshing);
+                    }
+                    return Single.just(false);
+                }).toFlowable());
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        disposable.clear();
     }
 }

@@ -31,7 +31,7 @@
             android:paddingBottom="16dp"
             android:text="This is a long description"
             app:layout_constraintTop_toBottomOf="@id/create_event_title"
-            style="?attr/textAppearanceBody1" />
+            style="?attr/textAppearanceBody2" />
 
         <LinearLayout
             android:id="@+id/event_form"

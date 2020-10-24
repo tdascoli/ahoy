@@ -48,7 +48,7 @@
         android:id="@+id/nav_events_guests"
         android:name="com.apollo29.ahoy.view.events.guests.GuestsFragment"
         android:label="@string/events_guests_nav_title"
-        tools:layout="@layout/events_fragment">
+        tools:layout="@layout/guests_fragment">
         <argument
             android:name="eventId"
             app:argType="integer"

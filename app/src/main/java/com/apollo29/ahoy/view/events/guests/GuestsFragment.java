@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.apollo29.ahoy.R;
 import com.apollo29.ahoy.view.events.EventsViewModel;
@@ -26,7 +27,7 @@ public class GuestsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         viewModel = new ViewModelProvider(requireActivity()).get(EventsViewModel.class);
-        return inflater.inflate(R.layout.events_fragment, container, false);
+        return inflater.inflate(R.layout.guests_fragment, container, false);
     }
 
     @Override
@@ -35,7 +36,7 @@ public class GuestsFragment extends Fragment {
             eventId = RegisterManuallyFragmentArgs.fromBundle(getArguments()).getEventId();
         }
 
-        RecyclerView list =  view.findViewById(R.id.events_list);
+        RecyclerView list =  view.findViewById(R.id.guests_list);
         viewModel.guests(eventId).observe(getViewLifecycleOwner(), guests -> {
             if (adapter==null) {
                 adapter = new GuestAdapter(guests);
@@ -45,5 +46,9 @@ public class GuestsFragment extends Fragment {
                 adapter.update(guests);
             }
         });
+
+        SwipeRefreshLayout refreshView =  view.findViewById(R.id.refresh_view);
+        refreshView.setOnRefreshListener(() ->
+                viewModel.refreshData(eventId).observe(getViewLifecycleOwner(), refreshView::setRefreshing));
     }
 }
