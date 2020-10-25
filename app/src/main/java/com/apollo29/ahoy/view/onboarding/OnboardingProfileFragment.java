@@ -8,18 +8,18 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.apollo29.ahoy.R;
 import com.apollo29.ahoy.databinding.OnboardingProfileFragmentBinding;
+import com.apollo29.ahoy.view.OverlayFragment;
 import com.google.android.material.datepicker.MaterialDatePicker;
 
 import br.com.ilhasoft.support.validation.Validator;
 
-public class OnboardingProfileFragment extends Fragment {
+public class OnboardingProfileFragment extends OverlayFragment {
 
     private NavController navController;
     private OnboardingViewModel viewModel;
@@ -53,8 +53,10 @@ public class OnboardingProfileFragment extends Fragment {
 
         binding.flowNext.setOnClickListener(v -> {
             if (validator.validate()) {
+                overlay(true);
                 viewModel.storeProfile();
-                // todo spinner and banner
+                // todo banner
+                overlay(false);
                 navController.navigate(R.id.nav_main);
             }
         });

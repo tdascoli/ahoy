@@ -8,19 +8,18 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.apollo29.ahoy.R;
 import com.apollo29.ahoy.databinding.CreateEventFragmentBinding;
+import com.apollo29.ahoy.view.OverlayFragment;
 import com.google.android.material.datepicker.MaterialDatePicker;
-import com.orhanobut.logger.Logger;
 
 import br.com.ilhasoft.support.validation.Validator;
 
-public class CreateEventFragment extends Fragment {
+public class CreateEventFragment extends OverlayFragment {
 
     private NavController navController;
     private CreateEventViewModel viewModel;
@@ -52,10 +51,9 @@ public class CreateEventFragment extends Fragment {
         binding.createEvent.setOnClickListener(view1 -> {
             // start spinner
             if (validator.validate()) {
+                overlay(true);
                 viewModel.createEvent().observe(getViewLifecycleOwner(), event -> {
-                    // todo navigate or show alert --> single to optional/maybe ??
-                    Logger.d(event);
-                    // todo store in room, show spinner
+                    overlay(false);
                     navController.navigate(R.id.nav_main);
                 });
             }

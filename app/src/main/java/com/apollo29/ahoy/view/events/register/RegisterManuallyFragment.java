@@ -8,18 +8,18 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.apollo29.ahoy.R;
 import com.apollo29.ahoy.databinding.RegisterManuallyFragmentBinding;
+import com.apollo29.ahoy.view.OverlayFragment;
 import com.google.android.material.datepicker.MaterialDatePicker;
 
 import br.com.ilhasoft.support.validation.Validator;
 
-public class RegisterManuallyFragment extends Fragment {
+public class RegisterManuallyFragment extends OverlayFragment {
 
     private NavController navController;
     private RegisterViewModel viewModel;
@@ -78,8 +78,9 @@ public class RegisterManuallyFragment extends Fragment {
 
         binding.flowRegister.setOnClickListener(view1 -> {
             if (validator.validate()) {
+                overlay(true);
                 viewModel.register(registerManually).observe(getViewLifecycleOwner(), success -> {
-                    // todo spinner etc
+                    overlay(false);
                     navController.navigate(R.id.nav_main);
                 });
             }

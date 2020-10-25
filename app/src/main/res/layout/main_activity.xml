@@ -20,4 +20,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/main_navigation" />
 
+    <include layout="@layout/progress_bar_overlay"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

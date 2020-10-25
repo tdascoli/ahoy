@@ -8,6 +8,10 @@ import com.apollo29.ahoy.data.AhoyProfile;
 import com.apollo29.ahoy.repository.ProfileRepository;
 import com.orhanobut.logger.Logger;
 
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.rxjava3.core.Single;
+
 public class ProfileViewModel extends ProfileDataViewModel {
 
     private final ProfileRepository profileRepository;

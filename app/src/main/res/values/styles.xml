@@ -32,7 +32,6 @@
 
         <!-- Status Bar -->
         <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="o_mr1">shortEdges</item>
-        <item name="android:statusBarColor">@color/homeColor</item>
         <item name="android:windowLightStatusBar">true</item>
 
         <!-- Textfields -->
@@ -42,6 +41,12 @@
         <item name="floatingActionButtonStyle">@style/AhoyTheme.FAB</item>
     </style>
 
+    <!-- Onboarding -->
+    <style name="AhoyTheme.Onboarding" parent="AhoyTheme">
+        <!-- Status Bar -->
+        <item name="background">@android:color/white</item>
+        <item name="android:statusBarColor">@android:color/white</item>
+    </style>
 
     <!-- Base application theme. -->
     <style name="AhoyTheme.Home" parent="AhoyTheme">

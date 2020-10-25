@@ -8,20 +8,17 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 
 import com.apollo29.ahoy.R;
 import com.apollo29.ahoy.databinding.ProfileFragmentBinding;
+import com.apollo29.ahoy.view.OverlayFragment;
 import com.google.android.material.datepicker.MaterialDatePicker;
 
 import br.com.ilhasoft.support.validation.Validator;
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends OverlayFragment {
 
-    private NavController navController;
     private ProfileViewModel viewModel;
     private ProfileFragmentBinding binding;
     private Validator validator;
@@ -30,7 +27,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
         viewModel = new ViewModelProvider(requireActivity()).get(ProfileViewModel.class);
         binding = DataBindingUtil.inflate(inflater, R.layout.profile_fragment, container, false);
         binding.setLifecycleOwner(getViewLifecycleOwner());
@@ -55,8 +51,10 @@ public class ProfileFragment extends Fragment {
 
         binding.profileUpdate.setOnClickListener(view1 -> {
             if (validator.validate()) {
+                overlay(true);
                 viewModel.updateProfile();
-                // todo spinner and banner
+                overlay(false);
+                // todo banner
             }
         });
     }
