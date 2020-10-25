@@ -48,6 +48,8 @@
     <!-- Main: Events -->
     <string name="main_events_nav_title">Events</string>
     <string name="main_events_title">Current and past Events</string>
+    <string name="main_events_guests_archived">The guest list cannot be displayed because the event took place more than 14 days ago and the data was deleted according to the guidelines.</string>
+    <string name="main_events_guests_future">The guest list cannot be displayed because the event has not yet taken place.</string>
 
     <!-- Events: Create Event -->
     <string name="events_create_nav_title">Event</string>

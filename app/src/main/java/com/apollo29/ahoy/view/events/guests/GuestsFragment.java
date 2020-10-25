@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,6 +36,13 @@ public class GuestsFragment extends Fragment {
         if (getArguments()!=null){
             eventId = RegisterManuallyFragmentArgs.fromBundle(getArguments()).getEventId();
         }
+
+        TextView title = view.findViewById(R.id.guests_title);
+        viewModel.loadEvent(eventId).observe(getViewLifecycleOwner(), event -> {
+            if (!event.isEmpty()){
+                title.setText(getString(R.string.events_guests_title, event.title));
+            }
+        });
 
         RecyclerView list =  view.findViewById(R.id.guests_list);
         viewModel.guests(eventId).observe(getViewLifecycleOwner(), guests -> {

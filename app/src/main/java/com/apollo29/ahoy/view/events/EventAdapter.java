@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,7 +22,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
 
     private List<Event> events;
     private final OnItemClickListener clickListener;
-    protected final SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
+    private final SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
 
     public EventAdapter(List<Event> events, OnItemClickListener clickListener) {
         this.events = events;
@@ -42,7 +43,20 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         Event event = events.get(position);
 
         viewHolder.eventTitle.setText(event.title);
-        viewHolder.eventDate.setText(String.valueOf(event.date));
+        viewHolder.eventDate.setText(EventUtil.getDateString(event, formatter));
+
+        if (EventUtil.isFuture(event)){
+            viewHolder.eventIcon.setImageResource(R.drawable.ic_event_future);
+        }
+        else if (EventUtil.isCurrent(event)){
+            viewHolder.eventIcon.setImageResource(R.drawable.ic_event_current);
+        }
+        else if (EventUtil.isDoneOrCurrent(event)){
+            viewHolder.eventIcon.setImageResource(R.drawable.ic_event_done);
+        }
+        else if (EventUtil.isArchived(event)){
+            viewHolder.eventIcon.setImageResource(R.drawable.ic_event_archive);
+        }
     }
 
     @Override
@@ -68,6 +82,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
 
         public TextView eventTitle;
         public TextView eventDate;
+        public ImageView eventIcon;
         public View clickableArea;
 
         public ViewHolder(View itemView) {
@@ -75,6 +90,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
 
             this.eventTitle = itemView.findViewById(R.id.event_title);
             this.eventDate = itemView.findViewById(R.id.event_date);
+            this.eventIcon = itemView.findViewById(R.id.event_icon);
             this.clickableArea = itemView.findViewById(R.id.list_item_clickable_area);
             this.clickableArea.setOnClickListener(this);
         }

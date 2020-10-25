@@ -63,7 +63,7 @@
         <item name="android:textStyle">normal</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/secondaryDarkColor</item>
+        <item name="android:textColor">@color/primaryDarkColor</item>
         <item name="android:letterSpacing">0.009375</item>
     </style>
     <style name="AhoyTheme.Typography.Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
@@ -71,7 +71,7 @@
         <item name="android:textStyle">normal</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/secondaryDarkColor</item>
+        <item name="android:textColor">@color/primaryDarkColor</item>
         <item name="android:letterSpacing">0.00714</item>
     </style>
 
@@ -102,7 +102,7 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/secondaryDarkColor</item>
+        <item name="android:textColor">@color/primaryDarkColor</item>
         <item name="android:letterSpacing">0.0357</item>
     </style>
     <style name="AhoyTheme.Typography.Overline" parent="TextAppearance.MaterialComponents.Overline">

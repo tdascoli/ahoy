@@ -32,6 +32,7 @@
 
         <!-- Status Bar -->
         <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="o_mr1">shortEdges</item>
+        <item name="android:statusBarColor">@color/homeColor</item>
         <item name="android:windowLightStatusBar">true</item>
 
         <!-- Textfields -->

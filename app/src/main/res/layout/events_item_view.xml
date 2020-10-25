@@ -9,6 +9,23 @@
     android:id="@+id/list_item_clickable_area">
 
     <LinearLayout
+        android:layout_width="@dimen/base_icon_space"
+        android:layout_height="@dimen/base_icon_space"
+        android:paddingVertical="@dimen/base_gutter"
+        android:paddingEnd="@dimen/base_gutter"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/event_icon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/base_icon_padding"
+            android:src="@drawable/ic_event_future"/>
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"

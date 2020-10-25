@@ -43,7 +43,7 @@ public class EventsFragment extends Fragment {
             if (adapter!=null) {
                 Event event = adapter.getItem(position);
                 Logger.d("event %s", event);
-                if (event != null) {
+                if (event != null && EventUtil.isDoneOrCurrent(event)) {
                     Bundle bundle = new Bundle();
                     bundle.putInt(EVENT_ID, event.uid);
                     navController.navigate(R.id.nav_events_guests, bundle);

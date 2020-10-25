@@ -28,7 +28,7 @@ public interface AhoyDao {
     Single<Event> getEvent(Integer eventId);
 
     @Transaction
-    @Query("SELECT * FROM event WHERE profile_id = :profileId ")
+    @Query("SELECT * FROM event WHERE profile_id = :profileId ORDER BY date DESC")
     Flowable<List<Event>> getEventsByProfileId(Integer profileId);
 
     @Transaction

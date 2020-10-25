@@ -52,6 +52,10 @@ public class EventsViewModel extends AndroidViewModel {
                 }).toFlowable());
     }
 
+    public LiveData<Event> loadEvent(int eventId){
+        return LiveDataReactiveStreams.fromPublisher(databaseRepository.getEvent(eventId).toFlowable());
+    }
+
     @Override
     protected void onCleared() {
         super.onCleared();

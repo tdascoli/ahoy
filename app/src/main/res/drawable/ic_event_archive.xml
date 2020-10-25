@@ -1,0 +1,30 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="512dp"
+    android:height="512dp"
+    android:viewportWidth="512"
+    android:viewportHeight="512">
+  <path
+      android:pathData="m40,72h448v416h-448z"
+      android:fillColor="#c3c6c7"/>
+  <path
+      android:pathData="m24,56h432v400h-432z"
+      android:fillColor="#e9eef2"/>
+  <path
+      android:pathData="m24,56h432v96h-432z"
+      android:fillColor="#eb423f"/>
+  <path
+      android:pathData="m144,240h192v160h-192z"
+      android:fillColor="#95573a"/>
+  <path
+      android:pathData="m344,320 l-104,16 -104,-16v-80h208z"
+      android:fillColor="#ad6643"/>
+  <path
+      android:pathData="m224,320h32v32h-32z"
+      android:fillColor="#7a4830"/>
+  <path
+      android:fillColor="#FF000000"
+      android:pathData="m488,64h-24v-8a8,8 0,0 0,-8 -8h-56v-8a24,24 0,0 0,-48 0v8h-16v-8a24,24 0,0 0,-48 0v8h-96v-8a24,24 0,0 0,-48 0v8h-16v-8a24,24 0,0 0,-48 0v8h-56a8,8 0,0 0,-8 8v400a8,8 0,0 0,8 8h8v24a8,8 0,0 0,8 8h448a8,8 0,0 0,8 -8v-416a8,8 0,0 0,-8 -8zM32,448v-288h416v288zM368,40a8,8 0,0 1,16 0v8h-16zM304,40a8,8 0,0 1,16 0v8h-16zM160,40a8,8 0,0 1,16 0v8h-16zM96,40a8,8 0,0 1,16 0v8h-16zM80,64v8a24.028,24.028 0,0 0,24 24,8 8,0 0,0 0,-16 8.009,8.009 0,0 1,-8 -8v-8h48v8a24.028,24.028 0,0 0,24 24,8 8,0 0,0 0,-16 8.009,8.009 0,0 1,-8 -8v-8h128v8a24.028,24.028 0,0 0,24 24,8 8,0 0,0 0,-16 8.009,8.009 0,0 1,-8 -8v-8h48v8a24.028,24.028 0,0 0,24 24,8 8,0 0,0 0,-16 8.009,8.009 0,0 1,-8 -8v-8h80v80h-416v-80zM480,480h-432v-16h408a8,8 0,0 0,8 -8v-376h16z"/>
+  <path
+      android:fillColor="#FF000000"
+      android:pathData="m264,200h-48a24.027,24.027 0,0 0,-24 24v8h-56a8,8 0,0 0,-8 8v80a8,8 0,0 0,6.784 7.907l1.216,0.187v71.906a8,8 0,0 0,8 8h192a8,8 0,0 0,8 -8v-71.906l1.216,-0.187a8,8 0,0 0,6.784 -7.907v-80a8,8 0,0 0,-8 -8h-56v-8a24.027,24.027 0,0 0,-24 -24zM208,224a8.009,8.009 0,0 1,8 -8h48a8.009,8.009 0,0 1,8 8v8h-64zM328,392h-176v-61.444l64,9.846v11.598a8,8 0,0 0,8 8h32a8,8 0,0 0,8 -8v-11.6l64,-9.846zM232,344v-16h16v16zM336,313.137 L264,324.213v-4.213a8,8 0,0 0,-8 -8h-32a8,8 0,0 0,-8 8v4.213l-72,-11.076v-65.137h192z"/>
+</vector>
