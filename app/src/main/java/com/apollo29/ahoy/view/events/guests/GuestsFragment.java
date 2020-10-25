@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.apollo29.ahoy.R;
+import com.apollo29.ahoy.view.events.EventUtil;
 import com.apollo29.ahoy.view.events.EventsViewModel;
 import com.apollo29.ahoy.view.events.register.RegisterManuallyFragmentArgs;
 
@@ -38,9 +39,11 @@ public class GuestsFragment extends Fragment {
         }
 
         TextView title = view.findViewById(R.id.guests_title);
+        TextView subtitle = view.findViewById(R.id.guests_subtitle);
         viewModel.loadEvent(eventId).observe(getViewLifecycleOwner(), event -> {
             if (!event.isEmpty()){
                 title.setText(getString(R.string.events_guests_title, event.title));
+                subtitle.setText(getString(R.string.events_guests_subtitle, EventUtil.getDefaultDateString(event)));
             }
         });
 

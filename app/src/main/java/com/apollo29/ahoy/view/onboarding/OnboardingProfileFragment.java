@@ -55,7 +55,6 @@ public class OnboardingProfileFragment extends OverlayFragment {
             if (validator.validate()) {
                 overlay(true);
                 viewModel.storeProfile();
-                // todo banner
                 overlay(false);
                 navController.navigate(R.id.nav_main);
             }

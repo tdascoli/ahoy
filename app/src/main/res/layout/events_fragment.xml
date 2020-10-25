@@ -2,37 +2,53 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp"
         android:background="@color/homeColor">
 
-        <TextView
-            android:id="@+id/events_title"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/events_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="16dp"
+                android:text="@string/main_events_title"
+                app:layout_constraintTop_toTopOf="parent"
+                style="?attr/textAppearanceHeadline5" />
+
+            <TextView
+                android:id="@+id/events_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="16dp"
+                android:text="This is a long description"
+                app:layout_constraintTop_toBottomOf="@id/events_title"
+                style="?attr/textAppearanceBody2" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/events_list"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@id/events_description"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.sergivonavi.materialbanner.Banner
+            android:id="@+id/banner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="16dp"
-            android:text="@string/main_events_title"
-            app:layout_constraintTop_toTopOf="parent"
-            style="?attr/textAppearanceHeadline5" />
+            android:visibility="gone"
+            app:backgroundColor="@android:color/white"
+            app:buttonRightText="@string/label_ok"
+            app:icon="@drawable/ic_event"
+            app:messageText="@string/main_events_guests_banner_message" />
 
-        <TextView
-            android:id="@+id/events_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="16dp"
-            android:text="This is a long description"
-            app:layout_constraintTop_toBottomOf="@id/events_title"
-            style="?attr/textAppearanceBody2" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/events_list"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@id/events_description"
-            app:layout_constraintBottom_toBottomOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
 </layout>

@@ -2,7 +2,7 @@
     <string name="app_name">Ahoy!</string>
 
     <!-- Basic -->
-    <string name="label_ok">OK</string>
+    <string name="label_ok">Okay</string>
     <string name="label_cancel">Cancel</string>
     <string name="label_quit">Quit</string>
     <string name="label_back">Back</string>
@@ -48,8 +48,7 @@
     <!-- Main: Events -->
     <string name="main_events_nav_title">Events</string>
     <string name="main_events_title">Current and past Events</string>
-    <string name="main_events_guests_archived">The guest list cannot be displayed because the event took place more than 14 days ago and the data was deleted according to the guidelines.</string>
-    <string name="main_events_guests_future">The guest list cannot be displayed because the event has not yet taken place.</string>
+    <string name="main_events_guests_banner_message">The guest list cannot be displayed because either the event has not yet taken place or the event took place more than 14 days ago and the data was deleted according to the guidelines.</string>
 
     <!-- Events: Create Event -->
     <string name="events_create_nav_title">Event</string>
@@ -70,6 +69,7 @@
     <!-- Events: Guests -->
     <string name="events_guests_nav_title">Guestlist</string>
     <string name="events_guests_title">Guests \"%1$s\"</string>
+    <string name="events_guests_subtitle">At %1$s</string>
     <string name="events_guests_description">The list of guests is displayed and saved on the device for 14 days. After these 14 days, all data is deleted from your device. The data is not passed on to third parties or used in any other way.</string>
     <string name="events_guests_guest_name">%1$s %2$s</string>
 
@@ -77,8 +77,15 @@
     <string name="main_profile_nav_title">Profile</string>
     <string name="main_profile_title">My Profile</string>
     <string name="main_profile_description">Your data is encrypted on your device and only you have access to it.\nYour data will not be passed on to third parties or used in any other way - it remains stored in your app on your device for the entire time.</string>
+    <string name="main_profile_banner_message">Your Profile was stored successful.</string>
 
     <!-- Main: About -->
     <string name="main_about_nav_title">About</string>
-    <string name="main_about_title">About: Ahoy!</string>
+    <string name="main_about_title">Ahoy!</string>
+    <string name="main_about_version">Version: %1$s</string>
+    <string name="main_about_published">Published by</string>
+    <string name="main_about_pubished_apollo29">Apollo 29</string>
+    <string name="main_about_resources">Resources</string>
+    <string name="main_about_resources_icons1"><![CDATA[Icons made by <a href="https://www.flaticon.com/de/autoren/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/de/" title="Flaticon"> www.flaticon.com</a>]]></string>
+    <string name="main_about_resources_icons2"><![CDATA[Icons made by <a href="https://www.flaticon.com/de/kostenloses-icon/kalender_2413563?term=event&page=2&position=10" title="iconixar">iconixar</a> from <a href="https://www.flaticon.com/de/" title="Flaticon"> www.flaticon.com</a>]]></string>
 </resources>

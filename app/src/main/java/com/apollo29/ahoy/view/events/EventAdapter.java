@@ -14,15 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.apollo29.ahoy.R;
 import com.apollo29.ahoy.comm.event.Event;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Locale;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
 
     private List<Event> events;
     private final OnItemClickListener clickListener;
-    private final SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
 
     public EventAdapter(List<Event> events, OnItemClickListener clickListener) {
         this.events = events;
@@ -43,7 +40,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         Event event = events.get(position);
 
         viewHolder.eventTitle.setText(event.title);
-        viewHolder.eventDate.setText(EventUtil.getDateString(event, formatter));
+        viewHolder.eventDate.setText(EventUtil.getDefaultDateString(event));
 
         if (EventUtil.isFuture(event)){
             viewHolder.eventIcon.setImageResource(R.drawable.ic_event_future);

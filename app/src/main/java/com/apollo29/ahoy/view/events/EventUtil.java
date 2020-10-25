@@ -5,11 +5,13 @@ import com.apollo29.ahoy.comm.event.Event;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 public class EventUtil {
 
     final static Calendar calendar = Calendar.getInstance();
+    final static SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
 
     public static boolean isFuture(Event event){
         return new Date().before(dateToValidate(event.date));
@@ -37,7 +39,11 @@ public class EventUtil {
         return event.active==0 || dateToValidate(event.date).before(currentDateBefore14Days.getTime());
     }
 
-    public static String getDateString(Event event, SimpleDateFormat formatter){
+    public static String getDateString(Event event, SimpleDateFormat customFormatter){
+        return customFormatter.format(dateToValidate(event.date));
+    }
+
+    public static String getDefaultDateString(Event event){
         return formatter.format(dateToValidate(event.date));
     }
 

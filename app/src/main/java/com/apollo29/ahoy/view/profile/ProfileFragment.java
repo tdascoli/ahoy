@@ -14,6 +14,8 @@ import com.apollo29.ahoy.R;
 import com.apollo29.ahoy.databinding.ProfileFragmentBinding;
 import com.apollo29.ahoy.view.OverlayFragment;
 import com.google.android.material.datepicker.MaterialDatePicker;
+import com.sergivonavi.materialbanner.Banner;
+import com.sergivonavi.materialbanner.BannerInterface;
 
 import br.com.ilhasoft.support.validation.Validator;
 
@@ -37,6 +39,9 @@ public class ProfileFragment extends OverlayFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        Banner banner = view.findViewById(R.id.banner);
+        banner.setRightButton(R.string.label_ok, BannerInterface::dismiss);
+
         viewModel.loadProfile();
         MaterialDatePicker<Long> dialog = MaterialDatePicker.Builder
                 .datePicker()
@@ -54,7 +59,7 @@ public class ProfileFragment extends OverlayFragment {
                 overlay(true);
                 viewModel.updateProfile();
                 overlay(false);
-                // todo banner
+                banner.show();
             }
         });
     }

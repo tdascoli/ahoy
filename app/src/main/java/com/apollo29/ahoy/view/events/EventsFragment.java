@@ -15,7 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.apollo29.ahoy.R;
 import com.apollo29.ahoy.comm.event.Event;
-import com.orhanobut.logger.Logger;
+import com.sergivonavi.materialbanner.Banner;
+import com.sergivonavi.materialbanner.BannerInterface;
 
 import static com.apollo29.ahoy.view.events.register.RegisterManuallyFragment.EVENT_ID;
 
@@ -37,16 +38,22 @@ public class EventsFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        Banner banner = view.findViewById(R.id.banner);
+        banner.setRightButton(R.string.label_ok, BannerInterface::dismiss);
+
         RecyclerView eventList =  view.findViewById(R.id.events_list);
         EventAdapter.OnItemClickListener eventClickListener = (view1, position) -> {
-            Logger.d("click %s", position);
             if (adapter!=null) {
                 Event event = adapter.getItem(position);
-                Logger.d("event %s", event);
-                if (event != null && EventUtil.isDoneOrCurrent(event)) {
-                    Bundle bundle = new Bundle();
-                    bundle.putInt(EVENT_ID, event.uid);
-                    navController.navigate(R.id.nav_events_guests, bundle);
+                if (event != null) {
+                    if (EventUtil.isDoneOrCurrent(event)) {
+                        Bundle bundle = new Bundle();
+                        bundle.putInt(EVENT_ID, event.uid);
+                        navController.navigate(R.id.nav_events_guests, bundle);
+                    }
+                    else {
+                        banner.show();
+                    }
                 }
             }
         };
