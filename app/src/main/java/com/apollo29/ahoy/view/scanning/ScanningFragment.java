@@ -3,148 +3,155 @@ package com.apollo29.ahoy.view.scanning;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
+import android.util.Size;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.camera.core.AspectRatio;
+import androidx.camera.core.Camera;
 import androidx.camera.core.CameraSelector;
+import androidx.camera.core.ImageAnalysis;
 import androidx.camera.core.Preview;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.apollo29.ahoy.R;
+import com.google.android.material.button.MaterialButton;
+import com.google.common.util.concurrent.ListenableFuture;
 import com.orhanobut.logger.Logger;
+import com.sergivonavi.materialbanner.Banner;
+import com.sergivonavi.materialbanner.BannerInterface;
 
-import static java.lang.Math.abs;
-import static java.lang.Math.max;
-import static java.lang.Math.min;
+import java.util.concurrent.ExecutionException;
+
+import static com.apollo29.ahoy.view.events.register.RegisterManuallyFragment.EVENT_ID;
+import static com.apollo29.ahoy.view.events.register.RegisterManuallyFragment.REGISTER_MANUALLY;
 
 public class ScanningFragment extends Fragment {
 
-    // SCANNING
-
     private NavController navController;
-    private ScanningViewModel viewModel;
+    private Banner banner;
 
-    private final static int PERMISSION_CAMERA_REQUEST = 1;
-    private final static double RATIO_4_3_VALUE = 4.0 / 3.0;
-    private final static double RATIO_16_9_VALUE = 16.0 / 9.0;
+    private static final int PERMISSION_REQUEST_CAMERA = 0;
 
     private PreviewView previewView;
-    private ProcessCameraProvider cameraProvider;
-    private CameraSelector cameraSelector;
-    private int lensFacing = CameraSelector.LENS_FACING_BACK;
-    private Preview previewUseCase;
+    private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
+
+    private MaterialButton qrCodeFoundButton;
+    private String qrCode;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
-        viewModel = new ViewModelProvider(requireActivity()).get(ScanningViewModel.class);
         return inflater.inflate(R.layout.scanning_fragment, container, false);
-        /*
-        ScanningFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.scanning_fragment, container, false);
-        binding.setLifecycleOwner(getViewLifecycleOwner());
-        binding.setViewModel(viewModel);
-        return binding.getRoot();*/
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        previewView = view.findViewById(R.id.viewFinder);
-        setupCamera();
-    }
+        banner = view.findViewById(R.id.banner);
+        banner.setRightButton(R.string.label_ok, BannerInterface::dismiss);
 
-    private int screenAspectRatio(){
-        // Get screen metrics used to setup camera for full screen resolution
-        DisplayMetrics metrics = new DisplayMetrics();
-        previewView.getDisplay().getRealMetrics(metrics);
-        return aspectRatio(metrics.widthPixels, metrics.heightPixels);
-    }
+        previewView = view.findViewById(R.id.scanning_preview);
 
-    /**
-     *  [androidx.camera.core.ImageAnalysis],[androidx.camera.core.Preview] requires enum value of
-     *  [androidx.camera.core.AspectRatio]. Currently it has values of 4:3 & 16:9.
-     *
-     *  Detecting the most suitable ratio for dimensions provided in @params by counting absolute
-     *  of preview ratio to one of the provided values.
-     *
-     *  @param width - preview width
-     *  @param height - preview height
-     *  @return suitable aspect ratio
-     */
-    private int aspectRatio(int width, int height) {
-        double previewRatio = max(width, height) / min(width, height);
-        if (abs(previewRatio - RATIO_4_3_VALUE) <= abs(previewRatio - RATIO_16_9_VALUE)) {
-            return AspectRatio.RATIO_4_3;
-        }
-        return AspectRatio.RATIO_16_9;
-    }
+        qrCodeFoundButton = view.findViewById(R.id.flow_register);
+        qrCodeFoundButton.setVisibility(View.INVISIBLE);
+        qrCodeFoundButton.setOnClickListener(v -> {
+            Toast.makeText(requireContext(), qrCode, Toast.LENGTH_SHORT).show();
+            Logger.d("QR Code Found: %s", qrCode);
 
-    private void setupCamera(){
-        cameraSelector = new CameraSelector.Builder().requireLensFacing(lensFacing).build();
-
-        viewModel.processCameraProvider().observe(getViewLifecycleOwner(), processCameraProvider -> {
-            cameraProvider = processCameraProvider;
-            if (isCameraPermissionGranted()) {
-                bindPreviewUseCase();
-            } else {
-                ActivityCompat.requestPermissions(
-                        requireActivity(),
-                        new String[]{Manifest.permission.CAMERA},
-                        PERMISSION_CAMERA_REQUEST);
+            String eventIdString = QRCodeUtil.eventFromUrl(qrCode);
+            if (eventIdString!=null){
+                int eventId = Integer.parseInt(eventIdString);
+                Bundle bundle = new Bundle();
+                bundle.putBoolean(REGISTER_MANUALLY, false);
+                bundle.putInt(EVENT_ID, eventId);
+                navController.navigate(R.id.nav_register_event, bundle);
             }
         });
+
+        MaterialButton flowCancel = view.findViewById(R.id.flow_cancel);
+        flowCancel.setOnClickListener(v -> navController.navigate(R.id.nav_home));
+
+        cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext());
+        requestCamera();
     }
 
-    private void bindPreviewUseCase() {
-        if (cameraProvider == null) {
-            return;
+    private void requestCamera() {
+        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            startCamera();
+        } else {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.CAMERA)) {
+                ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CAMERA);
+            } else {
+                ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CAMERA);
+            }
         }
-        if (previewUseCase != null) {
-            cameraProvider.unbind(previewUseCase);
-        }
-        previewUseCase = new Preview.Builder()
-                .setTargetAspectRatio(screenAspectRatio())
-                .setTargetRotation(previewView.getDisplay().getRotation())
-                .build();
-        previewUseCase.setSurfaceProvider(previewView.getSurfaceProvider());
-
-        try {
-            cameraProvider.bindToLifecycle(getViewLifecycleOwner(),
-                    cameraSelector,
-                    previewUseCase);
-        } catch (IllegalStateException | IllegalArgumentException e) {
-            Logger.w("Unhandled exception %s", e);
-        }
-    }
-
-    private boolean isCameraPermissionGranted() {
-        return ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == PERMISSION_CAMERA_REQUEST) {
-            if (isCameraPermissionGranted()) {
-                bindPreviewUseCase();
+        if (requestCode == PERMISSION_REQUEST_CAMERA) {
+            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                startCamera();
             } else {
-                Logger.w("no camera permission");
+                banner.setMessage(R.string.scanning_banner_camera_denied);
             }
         }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    private void startCamera() {
+        cameraProviderFuture.addListener(() -> {
+            try {
+                ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
+                bindCameraPreview(cameraProvider);
+            } catch (ExecutionException | InterruptedException e) {
+                banner.setMessage(R.string.scanning_banner_camera_error);
+                Logger.w("Error starting camera %s", e);
+            }
+        }, ContextCompat.getMainExecutor(requireContext()));
+    }
+
+    private void bindCameraPreview(@NonNull ProcessCameraProvider cameraProvider) {
+        previewView.setImplementationMode(PreviewView.ImplementationMode.PERFORMANCE);
+
+        Preview preview = new Preview.Builder().build();
+
+        CameraSelector cameraSelector = new CameraSelector.Builder()
+                .requireLensFacing(CameraSelector.LENS_FACING_BACK)
+                .build();
+
+        preview.setSurfaceProvider(previewView.getSurfaceProvider());
+
+        ImageAnalysis imageAnalysis =
+                new ImageAnalysis.Builder()
+                        .setTargetResolution(new Size(1280, 720))
+                        .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+                        .build();
+
+        imageAnalysis.setAnalyzer(ContextCompat.getMainExecutor(requireContext()), new QRCodeImageAnalyzer(new QRCodeFoundListener() {
+            @Override
+            public void qrCodeFound(String _qrCode) {
+                qrCode = _qrCode;
+                // todo banner???
+                qrCodeFoundButton.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void qrCodeNotFound() {
+                qrCodeFoundButton.setVisibility(View.INVISIBLE);
+            }
+        }));
+
+        Camera camera = cameraProvider.bindToLifecycle(getViewLifecycleOwner(), cameraSelector, imageAnalysis, preview);
     }
 }

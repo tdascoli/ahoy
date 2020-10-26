@@ -73,6 +73,14 @@
     <string name="events_guests_description">The list of guests is displayed and saved on the device for 14 days. After these 14 days, all data is deleted from your device. The data is not passed on to third parties or used in any other way.</string>
     <string name="events_guests_guest_name">%1$s %2$s</string>
 
+    <!-- Scanning -->
+    <string name="scanning_nav_title">Scan Event</string>
+    <string name="scanning_title">Scan Event Barcode</string>
+    <string name="scanning_description">Scan the event barcode on the "Ahoy!" with your camera app and register with your profile.</string>
+    <string name="scanning_tap_to_register">Tap to register</string>
+    <string name="scanning_banner_camera_denied">Permission Denial: The App can\'t use the camera. Please set the correct permission in settings.</string>
+    <string name="scanning_banner_camera_error">There was an error with your camera, please close the app an try again.</string>
+
     <!-- Main: Profile -->
     <string name="main_profile_nav_title">Profile</string>
     <string name="main_profile_title">My Profile</string>

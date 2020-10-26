@@ -44,7 +44,7 @@
     <fragment
         android:id="@+id/nav_scan_event"
         android:name="com.apollo29.ahoy.view.scanning.ScanningFragment"
-        android:label="@string/main_home_event_scan_event"
+        android:label="@string/scanning_nav_title"
         tools:layout="@layout/scanning_fragment" />
 
     <fragment

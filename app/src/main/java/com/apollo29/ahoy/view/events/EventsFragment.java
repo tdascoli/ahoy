@@ -47,6 +47,7 @@ public class EventsFragment extends Fragment {
                 Event event = adapter.getItem(position);
                 if (event != null) {
                     if (EventUtil.isDoneOrCurrent(event)) {
+                        banner.dismiss();
                         Bundle bundle = new Bundle();
                         bundle.putInt(EVENT_ID, event.uid);
                         navController.navigate(R.id.nav_events_guests, bundle);
