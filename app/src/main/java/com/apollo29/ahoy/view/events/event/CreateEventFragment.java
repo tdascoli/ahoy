@@ -15,6 +15,7 @@ import androidx.navigation.Navigation;
 import com.apollo29.ahoy.R;
 import com.apollo29.ahoy.databinding.CreateEventFragmentBinding;
 import com.apollo29.ahoy.view.OverlayFragment;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.datepicker.MaterialDatePicker;
 
 import br.com.ilhasoft.support.validation.Validator;
@@ -58,5 +59,8 @@ public class CreateEventFragment extends OverlayFragment {
                 });
             }
         });
+        // todo bottom navigation
+        MaterialButton flowCancel = view.findViewById(R.id.flow_cancel);
+        flowCancel.setOnClickListener(v -> navController.navigate(R.id.nav_main));
     }
 }

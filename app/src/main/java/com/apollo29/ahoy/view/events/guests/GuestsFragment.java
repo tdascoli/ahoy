@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -17,10 +19,12 @@ import com.apollo29.ahoy.R;
 import com.apollo29.ahoy.view.events.EventUtil;
 import com.apollo29.ahoy.view.events.EventsViewModel;
 import com.apollo29.ahoy.view.events.register.RegisterManuallyFragmentArgs;
+import com.google.android.material.button.MaterialButton;
 
 public class GuestsFragment extends Fragment {
     @Nullable
     private GuestAdapter adapter;
+    private NavController navController;
     private EventsViewModel viewModel;
     private int eventId = 0;
 
@@ -28,6 +32,7 @@ public class GuestsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
         viewModel = new ViewModelProvider(requireActivity()).get(EventsViewModel.class);
         return inflater.inflate(R.layout.guests_fragment, container, false);
     }
@@ -61,5 +66,13 @@ public class GuestsFragment extends Fragment {
         SwipeRefreshLayout refreshView =  view.findViewById(R.id.refresh_view);
         refreshView.setOnRefreshListener(() ->
                 viewModel.refreshData(eventId).observe(getViewLifecycleOwner(), refreshView::setRefreshing));
+
+        // todo bottom navigation
+        MaterialButton flowBack = view.findViewById(R.id.flow_back);
+        flowBack.setOnClickListener(v -> {
+            // todo back
+        });
+
+        // todo: when current then primary == add, when in 14 day period then download!!
     }
 }

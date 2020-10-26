@@ -7,7 +7,6 @@ import android.util.Size;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -66,9 +65,6 @@ public class ScanningFragment extends Fragment {
         qrCodeFoundButton = view.findViewById(R.id.flow_register);
         qrCodeFoundButton.setVisibility(View.INVISIBLE);
         qrCodeFoundButton.setOnClickListener(v -> {
-            Toast.makeText(requireContext(), qrCode, Toast.LENGTH_SHORT).show();
-            Logger.d("QR Code Found: %s", qrCode);
-
             String eventIdString = QRCodeUtil.eventFromUrl(qrCode);
             if (eventIdString!=null){
                 int eventId = Integer.parseInt(eventIdString);
@@ -80,7 +76,7 @@ public class ScanningFragment extends Fragment {
         });
 
         MaterialButton flowCancel = view.findViewById(R.id.flow_cancel);
-        flowCancel.setOnClickListener(v -> navController.navigate(R.id.nav_home));
+        flowCancel.setOnClickListener(v -> navController.navigate(R.id.nav_main));
 
         cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext());
         requestCamera();
@@ -142,7 +138,7 @@ public class ScanningFragment extends Fragment {
             @Override
             public void qrCodeFound(String _qrCode) {
                 qrCode = _qrCode;
-                // todo banner???
+                // todo better solution
                 qrCodeFoundButton.setVisibility(View.VISIBLE);
             }
 

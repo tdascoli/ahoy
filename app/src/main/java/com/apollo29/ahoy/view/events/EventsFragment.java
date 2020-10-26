@@ -59,6 +59,8 @@ public class EventsFragment extends Fragment {
             }
         };
 
+        // todo download list
+
         viewModel.events().observe(getViewLifecycleOwner(), events -> {
             if (adapter==null) {
                 adapter = new EventAdapter(events, eventClickListener);

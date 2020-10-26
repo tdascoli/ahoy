@@ -13,6 +13,7 @@
     <string name="label_confirm">Confirm</string>
     <string name="label_reset">Reset</string>
     <string name="label_update">Update</string>
+    <string name="label_add">Add</string>
     <string name="label_start">Let\'s start</string>
 
     <string name="error_required">Field is required</string>
