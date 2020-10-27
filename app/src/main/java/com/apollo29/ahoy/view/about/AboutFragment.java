@@ -17,7 +17,6 @@ import static androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY;
 
 public class AboutFragment extends Fragment {
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -28,7 +27,7 @@ public class AboutFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         TextView version = view.findViewById(R.id.version_title);
-        version.setText(getString(R.string.main_about_version, R.string.versionName));
+        version.setText(getString(R.string.main_about_version, getString(R.string.versionName)));
 
         TextView resources1 = view.findViewById(R.id.about_resources_content_1);
         resources1.setText(Html.fromHtml(getResources().getString(R.string.main_about_resources_icons1), FROM_HTML_MODE_LEGACY));
