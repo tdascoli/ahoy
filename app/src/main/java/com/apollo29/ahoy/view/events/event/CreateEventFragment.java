@@ -61,6 +61,6 @@ public class CreateEventFragment extends OverlayFragment {
         });
         // todo bottom navigation
         MaterialButton flowCancel = view.findViewById(R.id.flow_cancel);
-        flowCancel.setOnClickListener(v -> navController.navigate(R.id.nav_main));
+        flowCancel.setOnClickListener(v -> requireActivity().onBackPressed());
     }
 }

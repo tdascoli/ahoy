@@ -6,9 +6,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.navigation.NavController;
@@ -31,22 +34,37 @@ public class MainFragment extends Fragment {
 
     private NavController navController;
     private SmoothBottomBar bottomBar;
+    private int selectedPage = 0;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        statusBarColor();
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
         return inflater.inflate(R.layout.main_fragment, container, false);
     }
 
     @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("selectedPage",selectedPage);
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        if (savedInstanceState != null){
+            selectedPage = savedInstanceState.getInt("selectedPage", 0);
+        }
+
         ViewPager2 viewPager = view.findViewById(R.id.pager);
         setupViewPager(viewPager);
+        viewPager.setCurrentItem(selectedPage);
 
         bottomBar = view.findViewById(R.id.bottom_bar);
+        bottomBar.setItemActiveIndex(selectedPage);
         bottomBar.setOnItemSelectedListener(i -> {
+            selectedPage=i;
             viewPager.setCurrentItem(i);
             return true;
         });
@@ -87,5 +105,12 @@ public class MainFragment extends Fragment {
         public int getItemCount() {
             return fragments.size();
         }
+    }
+
+    private void statusBarColor(){
+        Window window = requireActivity().getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(ContextCompat.getColor(requireActivity(),R.color.homeColor));
     }
 }

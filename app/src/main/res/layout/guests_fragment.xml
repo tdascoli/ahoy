@@ -4,7 +4,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/homeColor">
 
         <LinearLayout
             android:id="@+id/guests_header"
@@ -61,7 +62,7 @@
             android:layout_height="wrap_content"
             android:padding="16dp"
             android:elevation="8dp"
-            android:background="@android:color/white"
+            android:background="@color/primaryLightColor"
             app:layout_constraintBottom_toBottomOf="parent">
 
             <com.google.android.material.button.MaterialButton
@@ -71,7 +72,7 @@
                 android:text="@string/label_back"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+                style="?attr/flowOutlinedButton"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/flow_add"

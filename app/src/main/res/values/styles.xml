@@ -32,7 +32,7 @@
 
         <!-- Status Bar -->
         <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="o_mr1">shortEdges</item>
-        <item name="android:statusBarColor">@android:color/white</item>
+        <item name="android:statusBarColor">@color/homeColor</item>
         <item name="android:windowLightStatusBar">true</item>
 
         <!-- Textfields -->
@@ -40,6 +40,9 @@
 
         <!-- FAB -->
         <item name="floatingActionButtonStyle">@style/AhoyTheme.FAB</item>
+
+        <!-- Outlined Button -->
+        <item name="flowOutlinedButton">@style/AhoyTheme.FlowButton.Outlined</item>
     </style>
 
     <!-- Onboarding -->
@@ -68,6 +71,13 @@
     <style name="AhoyTheme.FAB" parent="Widget.MaterialComponents.FloatingActionButton">
         <item name="backgroundTint">@color/primaryColor</item>
         <item name="iconTint">@color/secondaryTextColor</item>
+    </style>
+
+    <!--
+    #Outlined Button
+    -->
+    <style name="AhoyTheme.FlowButton.Outlined" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="backgroundTint">@android:color/white</item>
     </style>
 
 </resources>

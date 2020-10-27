@@ -69,9 +69,7 @@ public class GuestsFragment extends Fragment {
 
         // todo bottom navigation
         MaterialButton flowBack = view.findViewById(R.id.flow_back);
-        flowBack.setOnClickListener(v -> {
-            // todo back
-        });
+        flowBack.setOnClickListener(v -> requireActivity().onBackPressed());
 
         // todo: when current then primary == add, when in 14 day period then download!!
     }

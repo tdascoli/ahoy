@@ -76,7 +76,7 @@ public class ScanningFragment extends Fragment {
         });
 
         MaterialButton flowCancel = view.findViewById(R.id.flow_cancel);
-        flowCancel.setOnClickListener(v -> navController.navigate(R.id.nav_main));
+        flowCancel.setOnClickListener(v -> requireActivity().onBackPressed());
 
         cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext());
         requestCamera();

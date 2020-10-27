@@ -72,9 +72,6 @@ public class DatabaseRepository {
         LocalDateTime now = LocalDateTime.now();
         Long startOfDay = now.with(LocalTime.MIN).toEpochSecond(ZoneOffset.UTC); // start of a day // T00:00
         Long endOfDay = now.with(LocalTime.MAX).toEpochSecond(ZoneOffset.UTC); // end of a day // T23:59:59.999999999
-
-        Logger.d("SELECT * FROM event WHERE profile_id = %s AND date BETWEEN %s AND %s ORDER BY date", profileId, startOfDay, endOfDay);
-
         return database.ahoyDao().getCurrentEvent(profileId, startOfDay, endOfDay).map(events -> {
                     if (events.isEmpty()){
                         return empty;
