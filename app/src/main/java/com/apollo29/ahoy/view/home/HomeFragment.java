@@ -42,10 +42,12 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        viewModel.housekeeping();
+
         MaterialCardView currentEvent = view.findViewById(R.id.current_event);
         viewModel.currentEvent().observe(getViewLifecycleOwner(), maybeEvent -> {
             if (maybeEvent.isPresent()){
-                //viewModel.enqueue();
+                viewModel.enqueue();
 
                 ImageView qrcode = view.findViewById(R.id.event_qrcode);
                 qrcode.setImageBitmap(viewModel.qrcode("https://apollo29.com/ahoy/"+maybeEvent.get().uid));
@@ -69,7 +71,7 @@ public class HomeFragment extends Fragment {
                 });
             }
             else {
-                //viewModel.dequeue();
+                viewModel.dequeue();
             }
             currentEvent.setVisibility((maybeEvent.isPresent() ? View.VISIBLE : View.GONE));
         });

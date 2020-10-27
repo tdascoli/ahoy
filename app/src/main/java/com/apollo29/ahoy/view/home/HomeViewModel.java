@@ -17,6 +17,7 @@ import com.apollo29.ahoy.AhoyApplication;
 import com.apollo29.ahoy.comm.event.Event;
 import com.apollo29.ahoy.data.repository.DatabaseRepository;
 import com.apollo29.ahoy.repository.ProfileRepository;
+import com.apollo29.ahoy.worker.HousekeepingWorker;
 import com.apollo29.ahoy.worker.QueueWorker;
 
 import java.util.Optional;
@@ -32,6 +33,7 @@ public class HomeViewModel extends AndroidViewModel {
     private final WorkManager workManager;
 
     private final static String QUEUE_WORKER = "queue_worker";
+    private final static String HOUSEKEEPING_WORKER = "housekeeping_worker";
 
     public HomeViewModel(@NonNull Application application) {
         super(application);
@@ -65,6 +67,16 @@ public class HomeViewModel extends AndroidViewModel {
         PeriodicWorkRequest work = new PeriodicWorkRequest.Builder(QueueWorker.class, 5, TimeUnit.MINUTES)
                     .setConstraints(constraints)
                     .build();
-        workManager.enqueueUniquePeriodicWork(QUEUE_WORKER, ExistingPeriodicWorkPolicy.REPLACE, work);
+        workManager.enqueueUniquePeriodicWork(QUEUE_WORKER, ExistingPeriodicWorkPolicy.KEEP, work);
+    }
+
+    public void housekeeping(){
+        Constraints constraints = new Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build();
+        PeriodicWorkRequest work = new PeriodicWorkRequest.Builder(HousekeepingWorker.class, 1, TimeUnit.DAYS)
+                .setConstraints(constraints)
+                .build();
+        workManager.enqueueUniquePeriodicWork(HOUSEKEEPING_WORKER, ExistingPeriodicWorkPolicy.KEEP, work);
     }
 }

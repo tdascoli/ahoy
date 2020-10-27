@@ -88,6 +88,24 @@ public class DatabaseRepository {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    public Single<List<Event>> getEventsToClear(Integer profileId) {
+        LocalDateTime now = LocalDateTime.now();
+        Long fromDay = now.minusDays(15).with(LocalTime.MAX).toEpochSecond(ZoneOffset.UTC);
+
+        Logger.d("SELECT * FROM event WHERE active = 1 AND profile_id = %s AND date <= %s ORDER BY date", profileId, fromDay);
+
+        return database.ahoyDao().getEventsToClear(profileId, fromDay)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Completable inactivateEvents(List<Integer> events) {
+        return database.ahoyDao().removeQueues(events)
+                .andThen(database.ahoyDao().inactivateEvents(events))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
     // endregion
 
     // Queue region
@@ -100,12 +118,6 @@ public class DatabaseRepository {
 
     public Flowable<List<Queue>> getQueuesByEventId(Integer eventId){
         return database.ahoyDao().getQueuesByEventId(eventId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-    }
-
-    public Completable removeQueue(int uid){
-        return database.ahoyDao().removeQueue(uid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

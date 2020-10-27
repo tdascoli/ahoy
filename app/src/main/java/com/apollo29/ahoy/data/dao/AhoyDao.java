@@ -32,8 +32,16 @@ public interface AhoyDao {
     Flowable<List<Event>> getEventsByProfileId(Integer profileId);
 
     @Transaction
-    @Query("SELECT * FROM event WHERE profile_id = :profileId AND date BETWEEN :startOfDay AND :endOfDay ORDER BY date")
+    @Query("SELECT * FROM event WHERE active = 1 AND profile_id = :profileId AND date BETWEEN :startOfDay AND :endOfDay ORDER BY date")
     Single<List<Event>> getCurrentEvent(Integer profileId, Long startOfDay, Long endOfDay);
+
+    @Transaction
+    @Query("SELECT * FROM event WHERE active = 1 AND profile_id = :profileId AND date <= :fromDay ORDER BY date")
+    Single<List<Event>> getEventsToClear(Integer profileId, Long fromDay);
+
+    @Transaction
+    @Query("UPDATE event SET active = 0 WHERE uid IN (:events)")
+    Completable inactivateEvents(List<Integer> events);
 
     // endregion
 
@@ -48,6 +56,9 @@ public interface AhoyDao {
 
     @Query("DELETE FROM queue WHERE uid = :uid")
     Completable removeQueue(int uid);
+
+    @Query("DELETE FROM queue WHERE event_id IN (:events)")
+    Completable removeQueues(List<Integer> events);
 
     // endregion
 }
