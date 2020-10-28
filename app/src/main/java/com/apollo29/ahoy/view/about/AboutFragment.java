@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.apollo29.ahoy.BuildConfig;
 import com.apollo29.ahoy.R;
 
 import static androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY;
@@ -27,7 +28,7 @@ public class AboutFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         TextView version = view.findViewById(R.id.version_title);
-        version.setText(getString(R.string.main_about_version, getString(R.string.versionName)));
+        version.setText(getString(R.string.main_about_version, BuildConfig.VERSION_NAME));
 
         TextView resources1 = view.findViewById(R.id.about_resources_content_1);
         resources1.setText(Html.fromHtml(getResources().getString(R.string.main_about_resources_icons1), FROM_HTML_MODE_LEGACY));

@@ -5,56 +5,65 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="@dimen/base_gutter"
-    android:baselineAligned="false"
-    android:background="?android:attr/selectableItemBackground"
-    android:clickable="true"
-    android:focusable="true"
-    android:id="@+id/list_item_clickable_area">
-
-    <LinearLayout
-        android:layout_width="@dimen/base_icon_space"
-        android:layout_height="@dimen/base_icon_space"
-        android:padding="@dimen/base_gutter"
-        android:orientation="vertical"
-        android:gravity="center">
-
-        <ImageView
-            android:id="@+id/event_icon"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/base_icon_padding"
-            android:src="@drawable/ic_event_future"/>
-
-    </LinearLayout>
+    android:baselineAligned="false">
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
-        android:padding="@dimen/base_gutter"
-        android:orientation="vertical"
-        tools:ignore="UselessParent">
+        android:background="?android:attr/selectableItemBackground"
+        android:orientation="horizontal"
+        android:id="@+id/list_item_clickable_area"
+        android:baselineAligned="false">
 
-        <TextView
-            android:id="@+id/event_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:lines="1"
-            android:paddingBottom="@dimen/base_half_gutter"
-            style="?attr/textAppearanceSubtitle1"/>
+        <LinearLayout
+            android:layout_width="@dimen/base_icon_space"
+            android:layout_height="@dimen/base_icon_space"
+            android:padding="@dimen/base_gutter"
+            android:orientation="vertical"
+            android:gravity="center">
 
-        <TextView
-            android:id="@+id/event_date"
-            android:layout_gravity="start"
-            android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/event_icon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/base_icon_padding"
+                android:src="@drawable/ic_event_future"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            style="?attr/textAppearanceBody2"/>
+            android:layout_weight="1"
+            android:padding="@dimen/base_gutter"
+            android:orientation="vertical"
+            tools:ignore="UselessParent">
+
+            <TextView
+                android:id="@+id/event_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:lines="1"
+                android:paddingBottom="@dimen/base_half_gutter"
+                style="?attr/textAppearanceSubtitle1"/>
+
+            <TextView
+                android:id="@+id/event_date"
+                android:layout_gravity="start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="?attr/textAppearanceBody2"/>
+        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/download_clickable_area"
         android:layout_width="@dimen/base_icon_space"
         android:layout_height="@dimen/base_icon_space"
+        android:background="?android:attr/selectableItemBackground"
         android:padding="@dimen/base_gutter"
         android:orientation="vertical"
         android:gravity="center">

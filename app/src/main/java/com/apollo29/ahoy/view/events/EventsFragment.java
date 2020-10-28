@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -15,17 +14,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.apollo29.ahoy.R;
 import com.apollo29.ahoy.comm.event.Event;
+import com.apollo29.ahoy.view.events.download.DownloadFragment;
+import com.apollo29.ahoy.view.events.download.DownloadViewModel;
 import com.sergivonavi.materialbanner.Banner;
 import com.sergivonavi.materialbanner.BannerInterface;
 
-import static com.apollo29.ahoy.view.events.register.RegisterManuallyFragment.EVENT_ID;
-
-public class EventsFragment extends Fragment {
+public class EventsFragment extends DownloadFragment {
 
     @Nullable
     private EventAdapter adapter;
     private EventsViewModel viewModel;
     private NavController navController;
+
+    private final static String EVENT_ID = "eventId";
 
     @Nullable
     @Override
@@ -33,6 +34,7 @@ public class EventsFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
         viewModel = new ViewModelProvider(requireActivity()).get(EventsViewModel.class);
+        downloadViewModel = new ViewModelProvider(requireActivity()).get(DownloadViewModel.class);
         return inflater.inflate(R.layout.events_fragment, container, false);
     }
 
@@ -59,11 +61,18 @@ public class EventsFragment extends Fragment {
             }
         };
 
-        // todo download list
+        EventAdapter.OnDownloadClickListener downloadClickListener = (view1, position) -> {
+            if (adapter!=null) {
+                Event event = adapter.getItem(position);
+                if (event != null) {
+                    prepareCsvDownload(event);
+                }
+            }
+        };
 
         viewModel.events().observe(getViewLifecycleOwner(), events -> {
             if (adapter==null) {
-                adapter = new EventAdapter(events, eventClickListener);
+                adapter = new EventAdapter(events, eventClickListener, downloadClickListener);
                 eventList.setAdapter(adapter);
             }
             else {

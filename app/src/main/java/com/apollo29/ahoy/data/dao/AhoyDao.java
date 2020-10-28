@@ -52,7 +52,7 @@ public interface AhoyDao {
 
     @Transaction
     @Query("SELECT * FROM queue WHERE event_id = :eventId ")
-    Flowable<List<Queue>> getQueuesByEventId(Integer eventId);
+    Single<List<Queue>> getQueuesByEventId(Integer eventId);
 
     @Query("DELETE FROM queue WHERE uid = :uid")
     Completable removeQueue(int uid);

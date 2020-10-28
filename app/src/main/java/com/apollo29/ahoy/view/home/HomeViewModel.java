@@ -16,7 +16,7 @@ import androidx.work.WorkManager;
 import com.apollo29.ahoy.AhoyApplication;
 import com.apollo29.ahoy.comm.event.Event;
 import com.apollo29.ahoy.data.repository.DatabaseRepository;
-import com.apollo29.ahoy.repository.ProfileRepository;
+import com.apollo29.ahoy.repository.MainRepository;
 import com.apollo29.ahoy.worker.HousekeepingWorker;
 import com.apollo29.ahoy.worker.QueueWorker;
 
@@ -29,7 +29,7 @@ import androidmads.library.qrgenearator.QRGEncoder;
 public class HomeViewModel extends AndroidViewModel {
 
     private final DatabaseRepository databaseRepository;
-    private final ProfileRepository profileRepository;
+    private final MainRepository mainRepository;
     private final WorkManager workManager;
 
     private final static String QUEUE_WORKER = "queue_worker";
@@ -37,17 +37,17 @@ public class HomeViewModel extends AndroidViewModel {
 
     public HomeViewModel(@NonNull Application application) {
         super(application);
-        profileRepository = new ProfileRepository(getApplication());
+        mainRepository = new MainRepository(getApplication());
         databaseRepository = ((AhoyApplication) application).getRepository();
         workManager = WorkManager.getInstance(application);
     }
 
     public LiveData<Optional<Event>> currentEvent(){
-        return LiveDataReactiveStreams.fromPublisher(databaseRepository.getCurrentEvent(profileRepository.profileId()).toFlowable());
+        return LiveDataReactiveStreams.fromPublisher(databaseRepository.getCurrentEvent(mainRepository.profileId()).toFlowable());
     }
 
     public LiveData<Boolean> hasEvent(){
-        return LiveDataReactiveStreams.fromPublisher(databaseRepository.hasEvent(profileRepository.profileId()).toFlowable());
+        return LiveDataReactiveStreams.fromPublisher(databaseRepository.hasEvent(mainRepository.profileId()).toFlowable());
     }
 
     // todo refactor with only zxing
@@ -64,7 +64,7 @@ public class HomeViewModel extends AndroidViewModel {
         Constraints constraints = new Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build();
-        PeriodicWorkRequest work = new PeriodicWorkRequest.Builder(QueueWorker.class, 5, TimeUnit.MINUTES)
+        PeriodicWorkRequest work = new PeriodicWorkRequest.Builder(QueueWorker.class, 1, TimeUnit.HOURS)
                     .setConstraints(constraints)
                     .build();
         workManager.enqueueUniquePeriodicWork(QUEUE_WORKER, ExistingPeriodicWorkPolicy.KEEP, work);

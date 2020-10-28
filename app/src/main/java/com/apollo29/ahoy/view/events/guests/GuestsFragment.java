@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -18,10 +17,15 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.apollo29.ahoy.R;
 import com.apollo29.ahoy.view.events.EventUtil;
 import com.apollo29.ahoy.view.events.EventsViewModel;
+import com.apollo29.ahoy.view.events.download.DownloadFragment;
+import com.apollo29.ahoy.view.events.download.DownloadViewModel;
 import com.apollo29.ahoy.view.events.register.RegisterManuallyFragmentArgs;
 import com.google.android.material.button.MaterialButton;
 
-public class GuestsFragment extends Fragment {
+import static com.apollo29.ahoy.view.events.register.RegisterManuallyFragment.EVENT_ID;
+import static com.apollo29.ahoy.view.events.register.RegisterManuallyFragment.REGISTER_MANUALLY;
+
+public class GuestsFragment extends DownloadFragment {
     @Nullable
     private GuestAdapter adapter;
     private NavController navController;
@@ -34,6 +38,7 @@ public class GuestsFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
         viewModel = new ViewModelProvider(requireActivity()).get(EventsViewModel.class);
+        downloadViewModel = new ViewModelProvider(requireActivity()).get(DownloadViewModel.class);
         return inflater.inflate(R.layout.guests_fragment, container, false);
     }
 
@@ -45,12 +50,6 @@ public class GuestsFragment extends Fragment {
 
         TextView title = view.findViewById(R.id.guests_title);
         TextView subtitle = view.findViewById(R.id.guests_subtitle);
-        viewModel.loadEvent(eventId).observe(getViewLifecycleOwner(), event -> {
-            if (!event.isEmpty()){
-                title.setText(getString(R.string.events_guests_title, event.title));
-                subtitle.setText(getString(R.string.events_guests_subtitle, EventUtil.getDefaultDateString(event)));
-            }
-        });
 
         RecyclerView list =  view.findViewById(R.id.guests_list);
         viewModel.guests(eventId).observe(getViewLifecycleOwner(), guests -> {
@@ -67,10 +66,30 @@ public class GuestsFragment extends Fragment {
         refreshView.setOnRefreshListener(() ->
                 viewModel.refreshData(eventId).observe(getViewLifecycleOwner(), refreshView::setRefreshing));
 
-        // todo bottom navigation
         MaterialButton flowBack = view.findViewById(R.id.flow_back);
         flowBack.setOnClickListener(v -> requireActivity().onBackPressed());
 
-        // todo: when current then primary == add, when in 14 day period then download!!
+        MaterialButton flowPrimary = view.findViewById(R.id.flow_primary);
+        viewModel.loadEvent(eventId).observe(getViewLifecycleOwner(), event -> {
+            if (!event.isEmpty()){
+                title.setText(getString(R.string.events_guests_title, event.title));
+                subtitle.setText(getString(R.string.events_guests_subtitle, EventUtil.getDefaultDateString(event)));
+                if (EventUtil.isCurrent(event)){
+                    flowPrimary.setText(R.string.label_add);
+                    flowPrimary.setOnClickListener(view1 -> {
+                        Bundle bundle = new Bundle();
+                        bundle.putBoolean(REGISTER_MANUALLY, true);
+                        bundle.putInt(EVENT_ID, event.uid);
+                        navController.navigate(R.id.nav_register_event, bundle);
+                    });
+                }
+                else {
+                    flowPrimary.setText(R.string.label_download);
+                    flowPrimary.setOnClickListener(view1 -> {
+                        prepareCsvDownload(event);
+                    });
+                }
+            }
+        });
     }
 }

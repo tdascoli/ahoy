@@ -1,5 +1,6 @@
 package com.apollo29.ahoy.repository;
 
+import com.apollo29.ahoy.BuildConfig;
 import com.apollo29.ahoy.comm.RetrofitClientInstance;
 import com.apollo29.ahoy.comm.event.Event;
 import com.apollo29.ahoy.comm.event.EventLight;
@@ -20,7 +21,8 @@ public class EventRepository {
     }
 
     public static Single<EventLight> getEventLight(int eventId){
+        String apikey = BuildConfig.apikey;
         EventService service = RetrofitClientInstance.getRetrofitInstance().create(EventService.class);
-        return service.getEventLight(eventId).defaultIfEmpty(EventLight.empty());
+        return service.getEventLight(apikey, eventId).defaultIfEmpty(EventLight.empty());
     }
 }

@@ -5,20 +5,15 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 
 import com.apollo29.ahoy.data.AhoyProfile;
-import com.apollo29.ahoy.repository.ProfileRepository;
-import com.orhanobut.logger.Logger;
-
-import java.util.concurrent.TimeUnit;
-
-import io.reactivex.rxjava3.core.Single;
+import com.apollo29.ahoy.repository.MainRepository;
 
 public class ProfileViewModel extends ProfileDataViewModel {
 
-    private final ProfileRepository profileRepository;
+    private final MainRepository mainRepository;
 
     public ProfileViewModel(@NonNull Application application) {
         super(application);
-        this.profileRepository = new ProfileRepository(getApplication());
+        this.mainRepository = new MainRepository(getApplication());
     }
 
     public void updateProfile(){
@@ -29,14 +24,12 @@ public class ProfileViewModel extends ProfileDataViewModel {
                 timestamp.getValue(),
                 mobile.getValue(),
                 email.getValue());
-        profileRepository.putAhoyProfile(profile);
+        mainRepository.putAhoyProfile(profile);
     }
 
     public void loadProfile(){
-        if (profileRepository.hasAhoyProfile()){
-            String ahoyProfile = profileRepository.ahoyProfile();
-            Logger.d(ahoyProfile);
-
+        if (mainRepository.hasAhoyProfile()){
+            String ahoyProfile = mainRepository.ahoyProfile();
             AhoyProfile profile = AhoyProfile.fromJson(ahoyProfile);
             firstname.setValue(profile.getFirstname());
             lastname.setValue(profile.getLastname());

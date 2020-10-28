@@ -12,7 +12,7 @@ import com.apollo29.ahoy.comm.queue.Queue;
 import com.apollo29.ahoy.data.AhoyProfile;
 import com.apollo29.ahoy.data.repository.DatabaseRepository;
 import com.apollo29.ahoy.repository.EventRepository;
-import com.apollo29.ahoy.repository.ProfileRepository;
+import com.apollo29.ahoy.repository.MainRepository;
 import com.apollo29.ahoy.repository.QueueRepository;
 import com.apollo29.ahoy.view.profile.ProfileDataViewModel;
 import com.orhanobut.logger.Logger;
@@ -25,23 +25,31 @@ import io.reactivex.rxjava3.processors.BehaviorProcessor;
 
 public class RegisterViewModel extends ProfileDataViewModel {
 
-    private final ProfileRepository profileRepository;
+    private final MainRepository mainRepository;
     private final DatabaseRepository databaseRepository;
     private final BehaviorProcessor<Integer> eventId = BehaviorProcessor.createDefault(0);
 
     public RegisterViewModel(@NonNull Application application) {
         super(application);
-        profileRepository = new ProfileRepository(getApplication());
+        mainRepository = new MainRepository(getApplication());
         databaseRepository = ((AhoyApplication) getApplication()).getRepository();
     }
 
-    public LiveData<EventLight> getEvent(int eventId){
-        return LiveDataReactiveStreams.fromPublisher(EventRepository.getEventLight(eventId).toFlowable());
+    public LiveData<EventLight> getEvent(int eventId, boolean local){
+        return LiveDataReactiveStreams.fromPublisher(event(eventId, local));
+    }
+
+    private Flowable<EventLight> event(int eventId, boolean local){
+        if (local){
+            return databaseRepository.getEvent(eventId).map(event ->
+                    new EventLight(event.uid, event.title, event.date)).toFlowable();
+        }
+        return EventRepository.getEventLight(eventId).toFlowable();
     }
 
     public void loadProfile(){
-        if (profileRepository.hasAhoyProfile()){
-            String ahoyProfile = profileRepository.ahoyProfile();
+        if (mainRepository.hasAhoyProfile()){
+            String ahoyProfile = mainRepository.ahoyProfile();
             Logger.d(ahoyProfile);
 
             AhoyProfile profile = AhoyProfile.fromJson(ahoyProfile);

@@ -20,10 +20,12 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
 
     private List<Event> events;
     private final OnItemClickListener clickListener;
+    private final OnDownloadClickListener downloadClickListener;
 
-    public EventAdapter(List<Event> events, OnItemClickListener clickListener) {
+    public EventAdapter(List<Event> events, OnItemClickListener clickListener, OnDownloadClickListener downloadClickListener) {
         this.events = events;
         this.clickListener = clickListener;
+        this.downloadClickListener = downloadClickListener;
     }
 
     @Override
@@ -41,15 +43,18 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
 
         viewHolder.eventTitle.setText(event.title);
         viewHolder.eventDate.setText(EventUtil.getDefaultDateString(event));
+        viewHolder.download.setVisibility(View.GONE);
 
         if (EventUtil.isFuture(event)){
             viewHolder.eventIcon.setImageResource(R.drawable.ic_event_future);
         }
         else if (EventUtil.isCurrent(event)){
             viewHolder.eventIcon.setImageResource(R.drawable.ic_event_current);
+            viewHolder.download.setVisibility(View.VISIBLE);
         }
         else if (EventUtil.isDoneOrCurrent(event)){
             viewHolder.eventIcon.setImageResource(R.drawable.ic_event_done);
+            viewHolder.download.setVisibility(View.VISIBLE);
         }
         else if (EventUtil.isArchived(event)){
             viewHolder.eventIcon.setImageResource(R.drawable.ic_event_archive);
@@ -75,11 +80,16 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         void onClick(View view, int position);
     }
 
+    public interface OnDownloadClickListener {
+        void onClick(View view, int position);
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView eventTitle;
         public TextView eventDate;
         public ImageView eventIcon;
+        public View download;
         public View clickableArea;
 
         public ViewHolder(View itemView) {
@@ -88,6 +98,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
             this.eventTitle = itemView.findViewById(R.id.event_title);
             this.eventDate = itemView.findViewById(R.id.event_date);
             this.eventIcon = itemView.findViewById(R.id.event_icon);
+            this.download = itemView.findViewById(R.id.download_clickable_area);
+            this.download.setOnClickListener(view -> downloadClickListener.onClick(view, getAdapterPosition()));
             this.clickableArea = itemView.findViewById(R.id.list_item_clickable_area);
             this.clickableArea.setOnClickListener(this);
         }

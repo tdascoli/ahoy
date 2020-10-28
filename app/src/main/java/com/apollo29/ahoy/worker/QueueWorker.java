@@ -8,7 +8,7 @@ import androidx.work.rxjava3.RxWorker;
 
 import com.apollo29.ahoy.AhoyApplication;
 import com.apollo29.ahoy.data.repository.DatabaseRepository;
-import com.apollo29.ahoy.repository.ProfileRepository;
+import com.apollo29.ahoy.repository.MainRepository;
 
 import io.reactivex.rxjava3.core.Single;
 
@@ -22,11 +22,11 @@ public class QueueWorker extends RxWorker {
     @Override
     public Single<Result> createWork() {
         DatabaseRepository databaseRepository = ((AhoyApplication) getApplicationContext()).getRepository();
-        ProfileRepository profileRepository = new ProfileRepository(getApplicationContext());
+        MainRepository mainRepository = new MainRepository(getApplicationContext());
 
-        return databaseRepository.getCurrentEvent(profileRepository.profileId()).flatMap(event -> {
+        return databaseRepository.getCurrentEvent(mainRepository.profileId()).flatMap(event -> {
             if (event.isPresent()){
-                return profileRepository.updateQueue(event.get().uid).map(success -> Result.success());
+                return mainRepository.updateQueue(event.get().uid).map(success -> Result.success());
             }
             return Single.just(Result.success());
         });

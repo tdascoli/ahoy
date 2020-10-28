@@ -18,7 +18,7 @@ public interface QueueService {
 
     @Headers("Content-Type: application/json")
     @PUT("queue/{eventId}")
-    Single<Queue> putQueue(@Path("eventId") int eventId, @Body Queue queue);
+    Single<Queue> putQueue(@Header("Authorization") String apikey, @Path("eventId") int eventId, @Body Queue queue);
 
     @DELETE("queue/{uid}")
     Single<String> removeQueue(@Header("Authorization") String token, @Path("uid") int uid);

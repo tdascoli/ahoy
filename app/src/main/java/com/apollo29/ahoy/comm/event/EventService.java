@@ -15,7 +15,7 @@ public interface EventService {
     Maybe<Event> getEvent(@Header("Authorization") String token, @Path("eventId") int eventId);
 
     @GET("events/{eventId}")
-    Maybe<EventLight> getEventLight(@Path("eventId") int eventId);
+    Maybe<EventLight> getEventLight(@Header("Authorization") String apikey, @Path("eventId") int eventId);
 
     @Headers("Content-Type: application/json")
     @PUT("event")

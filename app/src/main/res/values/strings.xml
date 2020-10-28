@@ -14,6 +14,7 @@
     <string name="label_reset">Reset</string>
     <string name="label_update">Update</string>
     <string name="label_add">Add</string>
+    <string name="label_download">Download</string>
     <string name="label_start">Let\'s start</string>
 
     <string name="error_required">Field is required</string>
@@ -48,7 +49,8 @@
 
     <!-- Main: Events -->
     <string name="main_events_nav_title">Events</string>
-    <string name="main_events_title">Current and past Events</string>
+    <string name="main_events_title">Current, past and future Events</string>
+    <string name="main_events_description">To view the guest list, please click on the event.\nTo download the guest list, please click on the icon on the right.</string>
     <string name="main_events_guests_banner_message">The guest list cannot be displayed because either the event has not yet taken place or the event took place more than 14 days ago and the data was deleted according to the guidelines.</string>
 
     <!-- Events: Create Event -->
@@ -71,8 +73,9 @@
     <string name="events_guests_nav_title">Guestlist</string>
     <string name="events_guests_title">Guests \"%1$s\"</string>
     <string name="events_guests_subtitle">At %1$s</string>
-    <string name="events_guests_description">The list of guests is displayed and saved on the device for 14 days. After these 14 days, all data is deleted from your device. The data is not passed on to third parties or used in any other way.</string>
+    <string name="events_guests_description">The list of guests is stored on the device for 14 days. After these 14 days, all data is deleted from your machine.\nTo update the list, pull to refresh.</string>
     <string name="events_guests_guest_name">%1$s %2$s</string>
+    <string name="events_guests_file_name">%1$s-%2$s.csv</string>
 
     <!-- Scanning -->
     <string name="scanning_nav_title">Scan Event</string>

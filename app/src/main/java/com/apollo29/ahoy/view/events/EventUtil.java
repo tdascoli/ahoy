@@ -12,6 +12,7 @@ public class EventUtil {
 
     final static Calendar calendar = Calendar.getInstance();
     final static SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
+    final static SimpleDateFormat checkIn = new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.GERMAN);
 
     public static boolean isFuture(Event event){
         return new Date().before(dateToValidate(event.date));
@@ -50,5 +51,13 @@ public class EventUtil {
     private static Date dateToValidate(Long date){
         calendar.setTimeInMillis(TimeUnit.SECONDS.toMillis(date));
         return calendar.getTime();
+    }
+
+    public static String getCheckIn(Long timestamp){
+        return checkIn.format(dateToValidate(timestamp));
+    }
+
+    public static String getDate(Long timestamp){
+        return formatter.format(dateToValidate(timestamp));
     }
 }

@@ -75,10 +75,9 @@
                 style="?attr/flowOutlinedButton"/>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/flow_add"
+                android:id="@+id/flow_primary"
                 android:layout_width="128dp"
                 android:layout_height="wrap_content"
-                android:text="@string/label_add"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 

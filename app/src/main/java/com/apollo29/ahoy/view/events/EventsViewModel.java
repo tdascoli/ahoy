@@ -11,28 +11,29 @@ import com.apollo29.ahoy.AhoyApplication;
 import com.apollo29.ahoy.comm.event.Event;
 import com.apollo29.ahoy.comm.queue.Queue;
 import com.apollo29.ahoy.data.repository.DatabaseRepository;
-import com.apollo29.ahoy.repository.ProfileRepository;
+import com.apollo29.ahoy.repository.MainRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
 public class EventsViewModel extends AndroidViewModel {
 
-    private final ProfileRepository profileRepository;
+    private final MainRepository mainRepository;
     private final DatabaseRepository databaseRepository;
     private final CompositeDisposable disposable = new CompositeDisposable();
 
     public EventsViewModel(Application application) {
         super(application);
-        profileRepository = new ProfileRepository(getApplication());
+        mainRepository = new MainRepository(getApplication());
         databaseRepository = ((AhoyApplication) application).getRepository();
     }
 
     public LiveData<List<Event>> events(){
-        int profileId = profileRepository.profileId();
+        int profileId = mainRepository.profileId();
         if (profileId!=0){
             return LiveDataReactiveStreams.fromPublisher(databaseRepository.getEventsByProfileId(profileId));
         }
@@ -40,13 +41,13 @@ public class EventsViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Queue>> guests(int eventId){
-        return LiveDataReactiveStreams.fromPublisher(databaseRepository.getQueuesByEventId(eventId));
+        return LiveDataReactiveStreams.fromPublisher(databaseRepository.getQueuesByEventId(eventId).toFlowable());
     }
 
     public LiveData<Boolean> refreshData(int eventId){
-        return LiveDataReactiveStreams.fromPublisher(profileRepository.authToken().flatMap(authToken -> {
+        return LiveDataReactiveStreams.fromPublisher(mainRepository.authToken().flatMap(authToken -> {
                     if (authToken.isPresent()){
-                        return profileRepository.updateQueue(eventId).map(refreshing -> !refreshing);
+                        return mainRepository.updateQueue(eventId).map(refreshing -> !refreshing);
                     }
                     return Single.just(false);
                 }).toFlowable());
@@ -54,6 +55,11 @@ public class EventsViewModel extends AndroidViewModel {
 
     public LiveData<Event> loadEvent(int eventId){
         return LiveDataReactiveStreams.fromPublisher(databaseRepository.getEvent(eventId).toFlowable());
+    }
+
+    public LiveData<List<String[]>> guestlist(int eventId){
+        return LiveDataReactiveStreams.fromPublisher(databaseRepository.getQueuesByEventId(eventId).map(queues ->
+                queues.stream().map(Queue::asArray).collect(Collectors.toList())).toFlowable());
     }
 
     @Override

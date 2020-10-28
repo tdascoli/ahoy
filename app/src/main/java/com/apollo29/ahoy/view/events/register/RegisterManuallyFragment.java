@@ -57,7 +57,7 @@ public class RegisterManuallyFragment extends OverlayFragment {
                 .setInputMode(MaterialDatePicker.INPUT_MODE_TEXT)
                 .setTitleText(R.string.onboarding_profile_form_birthday);
 
-        viewModel.getEvent(eventId).observe(getViewLifecycleOwner(), event -> {
+        viewModel.getEvent(eventId, registerManually).observe(getViewLifecycleOwner(), event -> {
             if (!event.isEmpty()) {
                 viewModel.eventId(event.uid);
                 if (registerManually) {
@@ -86,8 +86,6 @@ public class RegisterManuallyFragment extends OverlayFragment {
             }
         });
 
-        binding.flowCancel.setOnClickListener(view1 -> {
-            navController.navigate(R.id.nav_main);
-        });
+        binding.flowCancel.setOnClickListener(v -> requireActivity().onBackPressed());
     }
 }

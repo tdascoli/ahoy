@@ -113,7 +113,7 @@ public class DatabaseRepository {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Flowable<List<Queue>> getQueuesByEventId(Integer eventId){
+    public Single<List<Queue>> getQueuesByEventId(Integer eventId){
         return database.ahoyDao().getQueuesByEventId(eventId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());

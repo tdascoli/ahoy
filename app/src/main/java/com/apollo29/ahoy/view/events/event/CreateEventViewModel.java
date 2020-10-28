@@ -12,7 +12,7 @@ import com.apollo29.ahoy.comm.event.Event;
 import com.apollo29.ahoy.data.repository.DatabaseRepository;
 import com.apollo29.ahoy.repository.AuthenticationRepository;
 import com.apollo29.ahoy.repository.EventRepository;
-import com.apollo29.ahoy.repository.ProfileRepository;
+import com.apollo29.ahoy.repository.MainRepository;
 import com.orhanobut.logger.Logger;
 
 import net.andreinc.mockneat.MockNeat;
@@ -34,12 +34,12 @@ public class CreateEventViewModel extends AndroidViewModel {
     private final SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
     private final MockNeat random = MockNeat.secure();
 
-    private final ProfileRepository profileRepository;
+    private final MainRepository mainRepository;
     private final DatabaseRepository databaseRepository;
 
     public CreateEventViewModel(Application application) {
         super(application);
-        profileRepository = new ProfileRepository(getApplication());
+        mainRepository = new MainRepository(getApplication());
         databaseRepository = ((AhoyApplication) application).getRepository();
     }
 
@@ -59,10 +59,10 @@ public class CreateEventViewModel extends AndroidViewModel {
 
     public LiveData<Event> createEvent(){
         String title = this.title.getValue();
-        int profileId = profileRepository.profileId();
+        int profileId = mainRepository.profileId();
         if (profileId!=0){
             Event event = Event.of(title, profileId, random.passwords().strong().get(), timestamp.getValue());
-            return LiveDataReactiveStreams.fromPublisher(AuthenticationRepository.authToken(profileRepository.deviceId(), profileRepository.preferences()).flatMap(authToken -> {
+            return LiveDataReactiveStreams.fromPublisher(AuthenticationRepository.authToken(mainRepository.deviceId(), mainRepository.preferences()).flatMap(authToken -> {
                 if (authToken.isPresent()) {
                     return EventRepository.putEvent(authToken.get(), event).flatMap(finalEvent ->
                             databaseRepository.putEvent(finalEvent).andThen(Single.just(finalEvent)));

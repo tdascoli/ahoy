@@ -6,6 +6,7 @@ import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import com.apollo29.ahoy.view.events.EventUtil;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -68,5 +69,19 @@ public class Queue implements Serializable {
         this.mobile = mobile;
         this.email = email;
         this.timestamp = timestamp;
+    }
+
+    @Ignore
+    public String[] asArray(){
+        return new String[]{
+            String.valueOf(this.uid),
+            this.firstname,
+            this.lastname,
+            this.address,
+            EventUtil.getDate(this.birthday),
+            this.mobile,
+            this.email,
+            EventUtil.getCheckIn(this.timestamp)
+        };
     }
 }
