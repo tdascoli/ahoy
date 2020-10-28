@@ -47,7 +47,7 @@ public abstract class DownloadFragment extends Fragment {
                     if (FILE_PATH != null && eventId.getValue() > 0) {
                         try {
                             OutputStream fileStream = requireActivity().getContentResolver().openOutputStream(FILE_PATH);
-                            CSVRepository.csv(fileStream, guestlist);
+                            CSVRepository.csv(fileStream, header(), guestlist);
                         } catch (IOException e) {
                             Logger.w("Error writing File %s", e);
                         }
@@ -55,5 +55,17 @@ public abstract class DownloadFragment extends Fragment {
                 }
             }
         });
+    }
+
+    private String[] header(){
+        return new String[]{
+                "#ID",
+                getString(R.string.onboarding_profile_form_firstname),
+                getString(R.string.onboarding_profile_form_lastname),
+                getString(R.string.onboarding_profile_form_address),
+                getString(R.string.onboarding_profile_form_birthday),
+                getString(R.string.onboarding_profile_form_mobile),
+                getString(R.string.onboarding_profile_form_email),
+                "Check In"};
     }
 }
