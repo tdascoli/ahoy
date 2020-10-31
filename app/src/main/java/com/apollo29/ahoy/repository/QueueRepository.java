@@ -8,6 +8,7 @@ import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 
 public class QueueRepository {
@@ -25,9 +26,9 @@ public class QueueRepository {
                 .doOnError(throwable -> Logger.w("Error on get Queue By Event Id %s", throwable));
     }
 
-    public static void removeQueue(String authToken, int id){
-        Logger.d("remove queue %s", id);
+    public static Completable removeQueue(String authToken, int id){
         QueueService service = RetrofitClientInstance.getRetrofitInstance().create(QueueService.class);
-        service.removeQueue(authToken, id);
+        return service.removeQueue(authToken, id)
+                .doOnError(throwable -> Logger.w("Error on remove Queue %s", throwable));
     }
 }

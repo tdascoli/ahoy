@@ -101,17 +101,8 @@ public class MainRepository {
 
     public Single<Boolean> confirm(String authToken, List<Queue> queues){
         queues.forEach(queue -> {
-            QueueRepository.removeQueue(authToken, queue.uid);
+            QueueRepository.removeQueue(authToken, queue.uid).subscribe();
         });
         return Single.just(true);
-/*
-        return Flowable.fromIterable(queues).map(queue -> {
-                    Logger.d(queue.uid);
-                    return QueueRepository.removeQueue(authToken, queue.uid);
-                })
-                .doOnError(throwable -> Logger.w("Error while removing queue %s", throwable))
-                .toList().map(singles -> true);
-
- */
     }
 }
