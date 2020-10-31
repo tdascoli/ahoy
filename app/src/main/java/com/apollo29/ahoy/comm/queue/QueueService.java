@@ -22,5 +22,5 @@ public interface QueueService {
     Single<Queue> putQueue(@Header("Authorization") String apikey, @Path("eventId") int eventId, @Body Queue queue);
 
     @DELETE("queue/{id}")
-    Completable removeQueue(@Header("Authorization") String token, @Path("id") int id);
+    void removeQueue(@Header("Authorization") String token, @Path("id") int id);
 }
