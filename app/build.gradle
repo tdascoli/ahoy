@@ -9,7 +9,7 @@ ahoyEnv.load(new FileInputStream(ahoyEnvFile))
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.0"
+    buildToolsVersion "30.0.2"
     defaultConfig {
         applicationId "com.apollo29.ahoy"
         minSdkVersion 26

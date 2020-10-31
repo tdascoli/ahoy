@@ -59,7 +59,6 @@ public abstract class DownloadFragment extends Fragment {
 
     private String[] header(){
         return new String[]{
-                "#ID",
                 getString(R.string.onboarding_profile_form_firstname),
                 getString(R.string.onboarding_profile_form_lastname),
                 getString(R.string.onboarding_profile_form_address),

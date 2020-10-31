@@ -74,7 +74,6 @@ public class Queue implements Serializable {
     @Ignore
     public String[] asArray(){
         return new String[]{
-            String.valueOf(this.uid),
             this.firstname,
             this.lastname,
             this.address,

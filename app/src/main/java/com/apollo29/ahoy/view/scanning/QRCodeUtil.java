@@ -10,7 +10,7 @@ public class QRCodeUtil {
     private final static Pattern EVENT_FROM_URL = Pattern.compile("([^/]+$)", Pattern.CASE_INSENSITIVE);
 
     public static boolean isValidUrl(String qrcode){
-        return qrcode.startsWith("https://apollo29.com");
+        return qrcode.startsWith("https://apollo29.com/ahoy/event/");
     }
 
     @Nullable

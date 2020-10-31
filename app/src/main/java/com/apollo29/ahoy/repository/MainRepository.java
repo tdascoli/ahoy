@@ -19,7 +19,6 @@ import com.orhanobut.logger.Logger;
 import java.util.List;
 import java.util.Optional;
 
-import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
 
 import static com.apollo29.ahoy.repository.PreferencesRepository.SEC_AHOY_PROFILE;
@@ -92,17 +91,27 @@ public class MainRepository {
                 return QueueRepository.getQueuesByEventId(authToken.get(), eventId)
                         .doOnError(throwable -> Logger.w("Error while getting queue %s", throwable))
                         .flatMap(queues ->
-                                databaseRepository.putQueue(queues.toArray(new Queue[0]))
-                                        .andThen(confirm(authToken.get(), queues)));
+                            databaseRepository.putQueue(queues.toArray(new Queue[0]))
+                                .doOnError(throwable -> Logger.w("Error on put queue in DB %s", throwable))
+                                .andThen(confirm(authToken.get(), queues)));
             }
-            return Single.just(true);
+            return Single.just(false);
         });
     }
 
-    private Single<Boolean> confirm(String authToken, List<Queue> queues){
-        return Flowable.fromIterable(queues).map(queue ->
-                QueueRepository.removeQueue(authToken, queue.uid))
+    public Single<Boolean> confirm(String authToken, List<Queue> queues){
+        queues.forEach(queue -> {
+            QueueRepository.removeQueue(authToken, queue.uid);
+        });
+        return Single.just(true);
+/*
+        return Flowable.fromIterable(queues).map(queue -> {
+                    Logger.d(queue.uid);
+                    return QueueRepository.removeQueue(authToken, queue.uid);
+                })
                 .doOnError(throwable -> Logger.w("Error while removing queue %s", throwable))
                 .toList().map(singles -> true);
+
+ */
     }
 }

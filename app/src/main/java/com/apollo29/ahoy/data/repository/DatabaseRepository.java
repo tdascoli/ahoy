@@ -1,5 +1,7 @@
 package com.apollo29.ahoy.data.repository;
 
+import androidx.lifecycle.LiveData;
+
 import com.apollo29.ahoy.comm.event.Event;
 import com.apollo29.ahoy.comm.queue.Queue;
 import com.apollo29.ahoy.data.AhoyDatabase;
@@ -117,6 +119,10 @@ public class DatabaseRepository {
         return database.ahoyDao().getQueuesByEventId(eventId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public LiveData<List<Queue>> streamQueuesByEventId(Integer eventId){
+        return database.ahoyDao().streamQueuesByEventId(eventId);
     }
 
     // endregion

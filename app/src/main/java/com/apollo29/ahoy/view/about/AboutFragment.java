@@ -32,8 +32,5 @@ public class AboutFragment extends Fragment {
 
         TextView resources1 = view.findViewById(R.id.about_resources_content_1);
         resources1.setText(Html.fromHtml(getResources().getString(R.string.main_about_resources_icons1), FROM_HTML_MODE_LEGACY));
-
-        TextView resources2 = view.findViewById(R.id.about_resources_content_2);
-        resources2.setText(Html.fromHtml(getResources().getString(R.string.main_about_resources_icons2), FROM_HTML_MODE_LEGACY));
     }
 }

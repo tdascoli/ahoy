@@ -1,5 +1,6 @@
 package com.apollo29.ahoy.data.dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -53,6 +54,10 @@ public interface AhoyDao {
     @Transaction
     @Query("SELECT * FROM queue WHERE event_id = :eventId ")
     Single<List<Queue>> getQueuesByEventId(Integer eventId);
+
+    @Transaction
+    @Query("SELECT * FROM queue WHERE event_id = :eventId ")
+    LiveData<List<Queue>> streamQueuesByEventId(Integer eventId);
 
     @Query("DELETE FROM queue WHERE uid = :uid")
     Completable removeQueue(int uid);

@@ -2,6 +2,7 @@ package com.apollo29.ahoy.comm.queue;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -20,6 +21,6 @@ public interface QueueService {
     @PUT("queue/{eventId}")
     Single<Queue> putQueue(@Header("Authorization") String apikey, @Path("eventId") int eventId, @Body Queue queue);
 
-    @DELETE("queue/{uid}")
-    Single<String> removeQueue(@Header("Authorization") String token, @Path("uid") int uid);
+    @DELETE("queue/{id}")
+    Completable removeQueue(@Header("Authorization") String token, @Path("id") int id);
 }

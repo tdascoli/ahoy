@@ -50,7 +50,7 @@ public class HomeFragment extends Fragment {
                 viewModel.enqueue();
 
                 ImageView qrcode = view.findViewById(R.id.event_qrcode);
-                qrcode.setImageBitmap(viewModel.qrcode("https://apollo29.com/ahoy/"+maybeEvent.get().uid));
+                qrcode.setImageBitmap(viewModel.qrcode("https://apollo29.com/ahoy/event/"+maybeEvent.get().uid));
 
                 TextView eventTitle = view.findViewById(R.id.event_title);
                 eventTitle.setText(maybeEvent.get().title);

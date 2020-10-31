@@ -21,7 +21,8 @@ public class AuthenticationRepository {
 
     public static Single<Token> deviceSignIn(Credentials credentials){
         AuthenticationService service = RetrofitClientInstance.getRetrofitInstance().create(AuthenticationService.class);
-        return service.deviceSignIn(credentials);
+        return service.deviceSignIn(credentials)
+                .doOnError(throwable -> Logger.w("Error on device sign in %s", throwable));
     }
 
     public static Single<Optional<String>> authToken(String deviceId, SharedPreferences prefs){

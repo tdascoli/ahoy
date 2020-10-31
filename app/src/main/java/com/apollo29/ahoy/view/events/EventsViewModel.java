@@ -15,7 +15,6 @@ import com.apollo29.ahoy.repository.MainRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
@@ -41,7 +40,7 @@ public class EventsViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Queue>> guests(int eventId){
-        return LiveDataReactiveStreams.fromPublisher(databaseRepository.getQueuesByEventId(eventId).toFlowable());
+        return databaseRepository.streamQueuesByEventId(eventId);
     }
 
     public LiveData<Boolean> refreshData(int eventId){
@@ -55,11 +54,6 @@ public class EventsViewModel extends AndroidViewModel {
 
     public LiveData<Event> loadEvent(int eventId){
         return LiveDataReactiveStreams.fromPublisher(databaseRepository.getEvent(eventId).toFlowable());
-    }
-
-    public LiveData<List<String[]>> guestlist(int eventId){
-        return LiveDataReactiveStreams.fromPublisher(databaseRepository.getQueuesByEventId(eventId).map(queues ->
-                queues.stream().map(Queue::asArray).collect(Collectors.toList())).toFlowable());
     }
 
     @Override
