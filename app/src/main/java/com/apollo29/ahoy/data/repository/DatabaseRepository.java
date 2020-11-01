@@ -1,8 +1,10 @@
 package com.apollo29.ahoy.data.repository;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.LiveDataReactiveStreams;
 
 import com.apollo29.ahoy.comm.event.Event;
+import com.apollo29.ahoy.comm.queue.LocalQueue;
 import com.apollo29.ahoy.comm.queue.Queue;
 import com.apollo29.ahoy.data.AhoyDatabase;
 import com.orhanobut.logger.Logger;
@@ -12,6 +14,7 @@ import java.time.LocalTime;
 import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
@@ -100,6 +103,7 @@ public class DatabaseRepository {
 
     public Completable inactivateEvents(List<Integer> events) {
         return database.ahoyDao().removeQueues(events)
+                .andThen(database.ahoyDao().removeLocalQueues(events))
                 .andThen(database.ahoyDao().inactivateEvents(events))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
@@ -122,7 +126,31 @@ public class DatabaseRepository {
     }
 
     public LiveData<List<Queue>> streamQueuesByEventId(Integer eventId){
-        return database.ahoyDao().streamQueuesByEventId(eventId);
+        return LiveDataReactiveStreams.fromPublisher(Flowable.combineLatest(
+                database.ahoyDao().streamQueuesByEventId(eventId),
+                database.ahoyDao().streamLocalQueuesByEventId(eventId),
+                (queues, localQueues) -> {
+                    if (!localQueues.isEmpty()){
+                        queues.addAll(localQueues.stream().map(Queue::fromLocal).collect(Collectors.toList()));
+                    }
+                    return queues;
+                }));
+    }
+
+    // endregion
+
+    // Local Queue region
+
+    public Completable putLocalQueue(LocalQueue queue){
+        return database.ahoyDao().putLocalQueue(queue)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Single<List<LocalQueue>> getLocalQueuesByEventId(Integer eventId){
+        return database.ahoyDao().getLocalQueuesByEventId(eventId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     // endregion

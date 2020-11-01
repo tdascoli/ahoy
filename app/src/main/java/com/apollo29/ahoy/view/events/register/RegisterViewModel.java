@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveDataReactiveStreams;
 
 import com.apollo29.ahoy.AhoyApplication;
 import com.apollo29.ahoy.comm.event.EventLight;
+import com.apollo29.ahoy.comm.queue.LocalQueue;
 import com.apollo29.ahoy.comm.queue.Queue;
 import com.apollo29.ahoy.data.AhoyProfile;
 import com.apollo29.ahoy.data.repository.DatabaseRepository;
@@ -69,7 +70,7 @@ public class RegisterViewModel extends ProfileDataViewModel {
 
     public LiveData<Boolean> register(boolean registerManually){
         Date date = new Date();
-        Queue queue = new Queue(null,
+        LocalQueue localQueue = new LocalQueue(null,
                 eventId.getValue(),
                 firstname.getValue(),
                 lastname.getValue(),
@@ -79,8 +80,8 @@ public class RegisterViewModel extends ProfileDataViewModel {
                 email.getValue(),
                 TimeUnit.MILLISECONDS.toSeconds(date.getTime()));
         if (registerManually){
-            return LiveDataReactiveStreams.fromPublisher(databaseRepository.putQueue(queue).andThen(Flowable.just(true)));
+            return LiveDataReactiveStreams.fromPublisher(databaseRepository.putLocalQueue(localQueue).andThen(Flowable.just(true)));
         }
-        return LiveDataReactiveStreams.fromPublisher(QueueRepository.putQueue(eventId.getValue(), queue).toFlowable().map(q -> true));
+        return LiveDataReactiveStreams.fromPublisher(QueueRepository.putQueue(eventId.getValue(), Queue.fromLocal(localQueue)).toFlowable().map(q -> true));
     }
 }

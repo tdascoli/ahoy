@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">Ahoy!</string>
+    <string name="app_name" translatable="false">Ahoy!</string>
 
     <!-- Basic -->
-    <string name="label_ok">Okay</string>
+    <string name="label_ok" translatable="false">Okay</string>
     <string name="label_cancel">Cancel</string>
     <string name="label_quit">Quit</string>
     <string name="label_back">Back</string>
@@ -12,9 +12,9 @@
     <string name="label_finish">Finish</string>
     <string name="label_confirm">Confirm</string>
     <string name="label_reset">Reset</string>
-    <string name="label_update">Update</string>
+    <string name="label_update" translatable="false">Update</string>
     <string name="label_add">Add</string>
-    <string name="label_download">Download</string>
+    <string name="label_download" translatable="false">Download</string>
     <string name="label_start">Let\'s start</string>
 
     <string name="error_required">Field is required</string>
@@ -23,7 +23,7 @@
 
     <!-- Onboarding: Welcome -->
     <string name="onboarding_welcome_nav_title">Welcome</string>
-    <string name="onboarding_welcome_title">Ahoy!</string>
+    <string name="onboarding_welcome_title" translatable="false">Ahoy!</string>
     <string name="onboarding_welcome_subtitle">Stop infection chains - Start contact tracing</string>
 
     <!-- Onboarding: Profile -->
@@ -38,23 +38,23 @@
     <string name="onboarding_profile_form_email">Email</string>
 
     <!-- Main: Home -->
-    <string name="main_home_nav_title">Home</string>
-    <string name="main_home_title">Ahoy!</string>
-    <string name="main_home_logo_image">Ahoy! Logo</string>
+    <string name="main_home_nav_title" translatable="false">Home</string>
+    <string name="main_home_title" translatable="false">Ahoy!</string>
+    <string name="main_home_logo_image" translatable="false">Ahoy! Logo</string>
 
     <string name="main_home_event_qrcode_image">QRCode with URL to register for Event</string>
     <string name="main_home_event_add_manually">Add manually</string>
     <string name="main_home_event_guests">Guests</string>
-    <string name="main_home_event_scan_event">Scan Event</string>
+    <string name="main_home_event_scan_event" translatable="false">Scan Event</string>
 
     <!-- Main: Events -->
-    <string name="main_events_nav_title">Events</string>
+    <string name="main_events_nav_title" translatable="false">Events</string>
     <string name="main_events_title">Current, past and future Events</string>
     <string name="main_events_description">To view the guest list, please click on the event.\nTo download the guest list, please click on the icon on the right.</string>
     <string name="main_events_guests_banner_message">The guest list cannot be displayed because either the event has not yet taken place or the event took place more than 14 days ago and the data was deleted according to the guidelines.</string>
 
     <!-- Events: Create Event -->
-    <string name="events_create_nav_title">Event</string>
+    <string name="events_create_nav_title" translatable="false">Event</string>
     <string name="events_create_title">New Event</string>
     <string name="events_create_form_title">Title</string>
     <string name="events_create_form_date">Event date</string>
@@ -74,14 +74,14 @@
     <string name="events_guests_title">Guests \"%1$s\"</string>
     <string name="events_guests_subtitle">At %1$s</string>
     <string name="events_guests_description">The list of guests is stored on the device for 14 days. After these 14 days, all data is deleted from your machine.\nTo update the list, pull to refresh.</string>
-    <string name="events_guests_guest_name">%1$s %2$s</string>
-    <string name="events_guests_file_name">%1$s-%2$s.csv</string>
+    <string name="events_guests_guest_name" translatable="false">%1$s %2$s</string>
+    <string name="events_guests_file_name" translatable="false">%1$s-%2$s.csv</string>
 
     <!-- Scanning -->
-    <string name="scanning_nav_title">Scan Event</string>
-    <string name="scanning_title">Scan Event Barcode</string>
+    <string name="scanning_nav_title" translatable="false">Scan Event</string>
+    <string name="scanning_title" translatable="false">Scan Event Barcode</string>
     <string name="scanning_description">Scan the event barcode on the "Ahoy!" with your camera app and register with your profile.</string>
-    <string name="scanning_tap_to_register">Tap to register</string>
+    <string name="scanning_tap_to_register" translatable="false">Tap to register</string>
     <string name="scanning_banner_camera_denied">Permission Denial: The App can\'t use the camera. Please set the correct permission in settings.</string>
     <string name="scanning_banner_camera_error">There was an error with your camera, please close the app an try again.</string>
 
@@ -93,10 +93,10 @@
 
     <!-- Main: About -->
     <string name="main_about_nav_title">About</string>
-    <string name="main_about_title">Ahoy!</string>
-    <string name="main_about_version">Version: %1$s</string>
+    <string name="main_about_title" translatable="false">Ahoy!</string>
+    <string name="main_about_version" translatable="false">Version: %1$s</string>
     <string name="main_about_published">Published by</string>
-    <string name="main_about_pubished_apollo29">Apollo 29</string>
+    <string name="main_about_pubished_apollo29" translatable="false">Apollo 29</string>
     <string name="main_about_resources">Resources</string>
-    <string name="main_about_resources_icons1"><![CDATA[Icons made by <a href="https://www.flaticon.com/de/autoren/freepik" title="Freepik">Freepik</a>, <a href="https://www.flaticon.com/de/kostenloses-icon/kalender_2413563?term=event&page=2&position=10" title="iconixar">iconixar</a> and <a href="https://icon54.com/" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/de/" title="Flaticon"> www.flaticon.com</a>]]></string>
+    <string name="main_about_resources_icons1" translatable="false"><![CDATA[Icons made by <a href="https://www.flaticon.com/de/autoren/freepik" title="Freepik">Freepik</a>, <a href="https://www.flaticon.com/de/kostenloses-icon/kalender_2413563?term=event&page=2&position=10" title="iconixar">iconixar</a> and <a href="https://icon54.com/" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/de/" title="Flaticon"> www.flaticon.com</a>]]></string>
 </resources>

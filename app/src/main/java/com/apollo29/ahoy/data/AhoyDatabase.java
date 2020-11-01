@@ -11,6 +11,7 @@ import androidx.room.TypeConverters;
 
 import com.apollo29.ahoy.BuildConfig;
 import com.apollo29.ahoy.comm.event.Event;
+import com.apollo29.ahoy.comm.queue.LocalQueue;
 import com.apollo29.ahoy.comm.queue.Queue;
 import com.apollo29.ahoy.data.converter.DateConverter;
 import com.apollo29.ahoy.data.dao.AhoyDao;
@@ -24,13 +25,14 @@ import static com.apollo29.ahoy.repository.PreferencesRepository.SEC_DB_SECRET;
 
 @Database(entities = {
             Event.class,
-            Queue.class
+            Queue.class,
+            LocalQueue.class
         },
         version = AhoyDatabase.VERSION)
 @TypeConverters(DateConverter.class)
 public abstract class AhoyDatabase extends RoomDatabase {
 
-    static final int VERSION = 3;
+    static final int VERSION = 4;
 
     private static AhoyDatabase instance;
 

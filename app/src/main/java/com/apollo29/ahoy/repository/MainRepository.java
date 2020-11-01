@@ -90,8 +90,7 @@ public class MainRepository {
             if (authToken.isPresent()){
                 return QueueRepository.getQueuesByEventId(authToken.get(), eventId)
                         .doOnError(throwable -> Logger.w("Error while getting queue %s", throwable))
-                        .flatMap(queues ->
-                            databaseRepository.putQueue(queues.toArray(new Queue[0]))
+                        .flatMap(queues -> databaseRepository.putQueue(queues.toArray(new Queue[0]))
                                 .doOnError(throwable -> Logger.w("Error on put queue in DB %s", throwable))
                                 .andThen(confirm(authToken.get(), queues)));
             }

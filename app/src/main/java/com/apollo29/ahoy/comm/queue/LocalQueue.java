@@ -12,9 +12,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-@Entity(tableName = "queue",
+@Entity(tableName = "local_queue",
         indices = {@Index("uid"), @Index("event_id")})
-public class Queue implements Serializable {
+public class LocalQueue implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     @SerializedName("uid")
@@ -55,10 +55,10 @@ public class Queue implements Serializable {
     public long timestamp;
 
     @Ignore
-    public Queue(){
+    public LocalQueue(){
     }
 
-    public Queue(Integer uid, Integer eventId, String firstname, String lastname, String address, long birthday, String mobile, String email, long timestamp) {
+    public LocalQueue(Integer uid, Integer eventId, String firstname, String lastname, String address, long birthday, String mobile, String email, long timestamp) {
         super();
         this.uid = uid;
         this.eventId = eventId;
@@ -69,10 +69,6 @@ public class Queue implements Serializable {
         this.mobile = mobile;
         this.email = email;
         this.timestamp = timestamp;
-    }
-
-    public static Queue fromLocal(LocalQueue localQueue){
-        return new Queue(localQueue.uid, localQueue.eventId, localQueue.firstname, localQueue.lastname, localQueue.address, localQueue.birthday, localQueue.mobile, localQueue.email, localQueue.timestamp);
     }
 
     @Ignore

@@ -1,6 +1,5 @@
 package com.apollo29.ahoy.data.dao;
 
-import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -8,6 +7,7 @@ import androidx.room.Query;
 import androidx.room.Transaction;
 
 import com.apollo29.ahoy.comm.event.Event;
+import com.apollo29.ahoy.comm.queue.LocalQueue;
 import com.apollo29.ahoy.comm.queue.Queue;
 
 import java.util.List;
@@ -57,13 +57,29 @@ public interface AhoyDao {
 
     @Transaction
     @Query("SELECT * FROM queue WHERE event_id = :eventId ")
-    LiveData<List<Queue>> streamQueuesByEventId(Integer eventId);
-
-    @Query("DELETE FROM queue WHERE uid = :uid")
-    Completable removeQueue(int uid);
+    Flowable<List<Queue>> streamQueuesByEventId(Integer eventId);
 
     @Query("DELETE FROM queue WHERE event_id IN (:events)")
     Completable removeQueues(List<Integer> events);
+
+    // endregion
+
+    // Local Queue region
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    Completable putLocalQueue(LocalQueue queue);
+
+    @Transaction
+    @Query("SELECT * FROM local_queue WHERE event_id = :eventId ")
+    Single<List<LocalQueue>> getLocalQueuesByEventId(Integer eventId);
+
+    @Transaction
+    @Query("SELECT * FROM local_queue WHERE event_id = :eventId ")
+    Flowable<List<LocalQueue>> streamLocalQueuesByEventId(Integer eventId);
+
+
+    @Query("DELETE FROM local_queue WHERE event_id IN (:events)")
+    Completable removeLocalQueues(List<Integer> events);
 
     // endregion
 }
