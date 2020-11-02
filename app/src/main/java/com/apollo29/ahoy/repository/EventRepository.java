@@ -7,6 +7,8 @@ import com.apollo29.ahoy.comm.event.EventLight;
 import com.apollo29.ahoy.comm.event.EventService;
 import com.orhanobut.logger.Logger;
 
+import java.util.List;
+
 import io.reactivex.rxjava3.core.Single;
 
 public class EventRepository {
@@ -28,5 +30,11 @@ public class EventRepository {
         EventService service = RetrofitClientInstance.getRetrofitInstance().create(EventService.class);
         return service.getEventLight(apikey, eventId).defaultIfEmpty(EventLight.empty())
                 .doOnError(throwable -> Logger.w("Error on get Event Light %s", throwable));
+    }
+
+    public static Single<List<Event>> getEventsByProfileId(String authToken, int profileId){
+        EventService service = RetrofitClientInstance.getRetrofitInstance().create(EventService.class);
+        return service.getEventsByProfileId(authToken, profileId)
+                .doOnError(throwable -> Logger.w("Error on get Events by Profile Id %s", throwable));
     }
 }

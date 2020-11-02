@@ -47,7 +47,6 @@ public class OnboardingWelcomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         viewModel.hasProfile().observe(getViewLifecycleOwner(), hasProfile -> {
             if (hasProfile){
-                // todo load data from server
                 navController.navigate(R.id.nav_main);
             }
             else {

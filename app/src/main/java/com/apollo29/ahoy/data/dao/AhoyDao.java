@@ -21,8 +21,8 @@ public interface AhoyDao {
 
     // Event region
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    Completable putEvent(Event event);
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    Completable putEvent(Event... events);
 
     @Transaction
     @Query("SELECT * FROM event WHERE uid = :eventId ")

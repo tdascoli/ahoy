@@ -9,6 +9,7 @@ import android.provider.Settings;
 import com.apollo29.ahoy.AhoyApplication;
 import com.apollo29.ahoy.BuildConfig;
 import com.apollo29.ahoy.comm.RetrofitClientInstance;
+import com.apollo29.ahoy.comm.event.Event;
 import com.apollo29.ahoy.comm.profile.Profile;
 import com.apollo29.ahoy.comm.profile.ProfileService;
 import com.apollo29.ahoy.comm.queue.Queue;
@@ -19,6 +20,7 @@ import com.orhanobut.logger.Logger;
 import java.util.List;
 import java.util.Optional;
 
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 
 import static com.apollo29.ahoy.repository.PreferencesRepository.SEC_AHOY_PROFILE;
@@ -45,6 +47,10 @@ public class MainRepository {
 
     public void putProfileId(int profileId){
         prefs.edit().putInt(SEC_PROFILE_ID,profileId).apply();
+    }
+
+    public boolean hasProfileId(){
+        return prefs.contains(SEC_PROFILE_ID) && profileId()!=null;
     }
 
     public String profileSecret(){
@@ -103,5 +109,15 @@ public class MainRepository {
             QueueRepository.removeQueue(authToken, queue.uid).subscribe();
         });
         return Single.just(true);
+    }
+
+    public Completable syncWithServer(int profileId){
+        return authToken().flatMapCompletable(authToken -> {
+            if (authToken.isPresent()){
+                return EventRepository.getEventsByProfileId(authToken.get(), profileId).flatMapCompletable(events ->
+                        databaseRepository.putEvent(events.toArray(new Event[0])));
+            }
+            return Completable.complete();
+        });
     }
 }

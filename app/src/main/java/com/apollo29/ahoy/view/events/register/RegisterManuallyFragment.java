@@ -47,6 +47,8 @@ public class RegisterManuallyFragment extends OverlayFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        viewModel.resetProfile();
+
         if (getArguments()!=null){
             registerManually = RegisterManuallyFragmentArgs.fromBundle(getArguments()).getRegisterManually();
             eventId = RegisterManuallyFragmentArgs.fromBundle(getArguments()).getEventId();

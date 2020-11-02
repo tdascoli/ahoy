@@ -73,4 +73,10 @@ public class CreateEventViewModel extends AndroidViewModel {
         }
         return new MutableLiveData<>(Event.empty());
     }
+
+    public void resetEvent(){
+        title.setValue("");
+        date.setValue("");
+        timestamp.onNext(0L);
+    }
 }

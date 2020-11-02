@@ -45,8 +45,8 @@ public class DatabaseRepository {
 
     // Event region
 
-    public Completable putEvent(Event event){
-        return database.ahoyDao().putEvent(event)
+    public Completable putEvent(Event... events){
+        return database.ahoyDao().putEvent(events)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

@@ -64,4 +64,14 @@ public abstract class ProfileDataViewModel extends AndroidViewModel {
         Date date = new Date(timestamp);
         return formatter.format(date);
     }
+
+    public void resetProfile(){
+        firstname.setValue("");
+        lastname.setValue("");
+        address.setValue("");
+        birthday.setValue("");
+        mobile.setValue("");
+        email.setValue("");
+        timestamp.onNext(0L);
+    }
 }

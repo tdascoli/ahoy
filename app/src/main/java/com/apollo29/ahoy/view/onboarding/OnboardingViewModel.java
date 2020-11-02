@@ -10,7 +10,6 @@ import com.apollo29.ahoy.comm.profile.Profile;
 import com.apollo29.ahoy.data.AhoyProfile;
 import com.apollo29.ahoy.repository.MainRepository;
 import com.apollo29.ahoy.view.profile.ProfileDataViewModel;
-import com.orhanobut.logger.Logger;
 
 import net.andreinc.mockneat.MockNeat;
 
@@ -35,21 +34,19 @@ public class OnboardingViewModel extends ProfileDataViewModel {
                 timestamp.getValue(),
                 mobile.getValue(),
                 email.getValue());
-        Logger.d(profile.toString());
-        Logger.d("AHOY PROFILE %s", AhoyProfile.toJson(profile));
         mainRepository.putAhoyProfile(profile);
     }
 
     public LiveData<Boolean> hasProfile(){
-        return LiveDataReactiveStreams.fromPublisher(profileId().map(profileId ->
-                mainRepository.hasAhoyProfile()).toFlowable());
+        return LiveDataReactiveStreams.fromPublisher(profileId().toFlowable());
     }
 
-    private Single<Integer> profileId(){
-        if (mainRepository.hasAhoyProfile()){
-            return Single.just(mainRepository.profileId());
+    private Single<Boolean> profileId(){
+        if (mainRepository.hasProfileId()){
+            return mainRepository.syncWithServer(mainRepository.profileId())
+                    .andThen(Single.just(mainRepository.hasAhoyProfile()));
         }
-        return generateProfile().map(profile -> profile.uid);
+        return generateProfile().map(profile -> mainRepository.hasAhoyProfile());
     }
 
     private Single<Profile> generateProfile(){

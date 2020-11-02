@@ -4,9 +4,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -24,11 +27,13 @@ import com.apollo29.ahoy.R;
 import com.apollo29.ahoy.databinding.CreateEventFragmentBinding;
 import com.apollo29.ahoy.view.OverlayFragment;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.datepicker.CalendarConstraints;
+import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.orhanobut.logger.Logger;
 
+import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import br.com.ilhasoft.support.validation.Validator;
@@ -48,6 +53,7 @@ public class CreateEventFragment extends OverlayFragment implements PurchasesUpd
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        statusBarColor();
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
         viewModel = new ViewModelProvider(requireActivity()).get(CreateEventViewModel.class);
         binding = DataBindingUtil.inflate(inflater, R.layout.create_event_fragment, container, false);
@@ -59,15 +65,24 @@ public class CreateEventFragment extends OverlayFragment implements PurchasesUpd
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        viewModel.resetEvent();
+
         // Billing
         setupBillingClient();
         // endregion
 
+        // todo add constraints for all events, async...
+        CalendarConstraints constraints = new CalendarConstraints.Builder()
+                .setValidator(DateValidatorPointForward.now())
+                .build();
+
         MaterialDatePicker<Long> dialog = MaterialDatePicker.Builder
                 .datePicker()
+                .setCalendarConstraints(constraints)
                 .setInputMode(MaterialDatePicker.INPUT_MODE_CALENDAR)
                 .setTitleText(R.string.events_create_form_date)
                 .build();
+
         dialog.addOnPositiveButtonClickListener(selection -> viewModel.setDate(selection));
         binding.eventDateInput.setOnClickListener(v -> dialog.showNow(getParentFragmentManager(),"dialog"));
         binding.createEvent.setOnClickListener(view1 -> {
@@ -83,6 +98,13 @@ public class CreateEventFragment extends OverlayFragment implements PurchasesUpd
 
         MaterialButton flowCancel = view.findViewById(R.id.flow_cancel);
         flowCancel.setOnClickListener(v -> requireActivity().onBackPressed());
+    }
+
+    private void statusBarColor(){
+        Window window = requireActivity().getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(ContextCompat.getColor(requireActivity(),R.color.homeColor));
     }
 
     private void setupBillingClient(){

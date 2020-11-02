@@ -1,5 +1,7 @@
 package com.apollo29.ahoy.comm.event;
 
+import java.util.List;
+
 import io.reactivex.rxjava3.core.Maybe;
 import io.reactivex.rxjava3.core.Single;
 import retrofit2.http.Body;
@@ -13,6 +15,10 @@ public interface EventService {
 
     @GET("event/{eventId}")
     Maybe<Event> getEvent(@Header("Authorization") String token, @Path("eventId") int eventId);
+
+
+    @GET("event/list/{profileId}")
+    Single<List<Event>> getEventsByProfileId(@Header("Authorization") String token, @Path("profileId") int profileId);
 
     @GET("events/{eventId}")
     Maybe<EventLight> getEventLight(@Header("Authorization") String apikey, @Path("eventId") int eventId);
