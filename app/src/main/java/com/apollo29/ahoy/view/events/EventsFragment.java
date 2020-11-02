@@ -16,6 +16,7 @@ import com.apollo29.ahoy.R;
 import com.apollo29.ahoy.comm.event.Event;
 import com.apollo29.ahoy.view.events.download.DownloadFragment;
 import com.apollo29.ahoy.view.events.download.DownloadViewModel;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.sergivonavi.materialbanner.Banner;
 import com.sergivonavi.materialbanner.BannerInterface;
 
@@ -79,5 +80,8 @@ public class EventsFragment extends DownloadFragment {
                 adapter.updateEvents(events);
             }
         });
+
+        ExtendedFloatingActionButton createEvent = view.findViewById(R.id.create_event);
+        createEvent.setOnClickListener(v -> navController.navigate(R.id.nav_create_event));
     }
 }

@@ -23,12 +23,22 @@ public class OnboardingWelcomeFragment extends Fragment {
     private NavController navController;
     private OnboardingViewModel viewModel;
 
+    private static final String SHORTCUT_SCANNING = "com.apollo29.ahoy.shortcuts.SCANNING";
+    private static final String SHORTCUT_CREATE_EVENT = "com.apollo29.ahoy.shortcuts.CREATE_EVENT";
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
+        // Shortcuts
+        handleShortcut(requireActivity().getIntent().getAction());
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         statusBarColor();
-        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
         viewModel = new ViewModelProvider(requireActivity()).get(OnboardingViewModel.class);
         return inflater.inflate(R.layout.onboarding_welcome_fragment, container, false);
     }
@@ -56,5 +66,22 @@ public class OnboardingWelcomeFragment extends Fragment {
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.setStatusBarColor(ContextCompat.getColor(requireActivity(),R.color.white));
+    }
+
+    /**
+     * Starts the relevant activity/fragment based on which shortcut has been pressed
+     * @param intentAction specific shortcut action
+     */
+    private void handleShortcut(@Nullable String intentAction) {
+        if (intentAction!=null) {
+            switch (intentAction) {
+                case SHORTCUT_SCANNING:
+                    navController.navigate(R.id.nav_scan_event);
+                    break;
+                case SHORTCUT_CREATE_EVENT:
+                    navController.navigate(R.id.nav_create_event);
+                    break;
+            }
+        }
     }
 }

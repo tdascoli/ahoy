@@ -13,7 +13,7 @@ import com.orhanobut.logger.PrettyFormatStrategy;
 
 public class MainActivity extends AppCompatActivity {
 
-    private FrameLayout frameLayout;
+    private FrameLayout frameLayout; // todo change to view??!
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

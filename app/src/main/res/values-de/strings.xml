@@ -3,7 +3,7 @@
     <string name="label_cancel">Abbrechen</string>
     <string name="label_quit">Beenden</string>
     <string name="label_back">Zurück</string>
-    <string name="label_skip">Überspringen</string>
+    <string name="label_skip">Später</string>
     <string name="label_next">Weiter</string>
     <string name="label_register">Anmelden</string>
     <string name="label_finish">Beenden</string>
@@ -54,4 +54,5 @@
     <string name="main_profile_banner_message">Dein Profil wurde erfolgreich gespeichert.</string>
     <string name="main_events_title">Aktuelle, vergangene und zukünftige Events</string>
     <string name="main_home_event_qrcode_image">QRCode mit URL zur Anmeldung für die Veranstaltung</string>
+    <string name="events_buy_title">Event kaufen</string>
 </resources>

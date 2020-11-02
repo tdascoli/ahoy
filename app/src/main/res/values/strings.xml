@@ -59,6 +59,8 @@
     <string name="events_create_form_title">Title</string>
     <string name="events_create_form_date">Event date</string>
     <string name="events_create_form_button_create">Create</string>
+    <!-- Events: Purchase Event -->
+    <string name="events_buy_title">Buy Event</string>
 
     <!-- Events: Register Event -->
     <string name="events_register_event_nav_title">Register Event</string>
@@ -99,4 +101,10 @@
     <string name="main_about_pubished_apollo29" translatable="false">Apollo 29</string>
     <string name="main_about_resources">Resources</string>
     <string name="main_about_resources_icons1" translatable="false"><![CDATA[Icons made by <a href="https://www.flaticon.com/de/autoren/freepik" title="Freepik">Freepik</a>, <a href="https://www.flaticon.com/de/kostenloses-icon/kalender_2413563?term=event&page=2&position=10" title="iconixar">iconixar</a> and <a href="https://icon54.com/" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/de/" title="Flaticon"> www.flaticon.com</a>]]></string>
+
+    <!-- Shortcuts -->
+    <string name="shortcut_scanning_title">Scan Event Barcode</string>
+    <string name="shortcut_scanning_disabled">Scanning of Event Barcodes is disabled</string>
+    <string name="shortcut_event_title">Create New Event</string>
+    <string name="shortcut_event_disabled">Creation of new Events is disabled</string>
 </resources>

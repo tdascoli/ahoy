@@ -1,0 +1,35 @@
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="scan"
+        android:enabled="true"
+        android:icon="@drawable/ic_qr_code"
+        android:shortcutShortLabel="@string/shortcut_scanning_title"
+        android:shortcutLongLabel="@string/shortcut_scanning_title"
+        android:shortcutDisabledMessage="@string/shortcut_scanning_disabled">
+        <intent
+            android:action="com.apollo29.ahoy.shortcuts.SCANNING"
+            android:targetPackage="com.apollo29.ahoy"
+            android:targetClass="com.apollo29.ahoy.MainActivity" />
+        <!-- If your shortcut is associated with multiple intents, include them
+             here. The last intent in the list determines what the user sees when
+             they launch this shortcut. -->
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+
+    <shortcut
+        android:shortcutId="new_event"
+        android:enabled="true"
+        android:icon="@drawable/ic_event"
+        android:shortcutShortLabel="@string/shortcut_event_title"
+        android:shortcutLongLabel="@string/shortcut_event_title"
+        android:shortcutDisabledMessage="@string/shortcut_event_disabled">
+        <intent
+            android:action="com.apollo29.ahoy.shortcuts.CREATE_EVENT"
+            android:targetPackage="com.apollo29.ahoy"
+            android:targetClass="com.apollo29.ahoy.MainActivity" />
+        <!-- If your shortcut is associated with multiple intents, include them
+             here. The last intent in the list determines what the user sees when
+             they launch this shortcut. -->
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+</shortcuts>

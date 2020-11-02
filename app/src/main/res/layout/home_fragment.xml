@@ -102,8 +102,10 @@
         android:layout_margin="16dp"
         android:text="@string/events_create_title"
         android:visibility="gone"
+        tools:visibility="visible"
         app:backgroundTint="@color/secondaryColor"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:icon="@drawable/ic_event"/>
 
@@ -115,6 +117,6 @@
         android:src="@drawable/ic_qr_code"
         app:backgroundTint="@color/secondaryColor"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
