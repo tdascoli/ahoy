@@ -34,6 +34,8 @@ public abstract class AhoyDatabase extends RoomDatabase {
 
     static final int VERSION = 4;
 
+    private static final String PASSPHRASE = BuildConfig.dbsecret;
+
     private static AhoyDatabase instance;
 
     @VisibleForTesting
@@ -69,16 +71,21 @@ public abstract class AhoyDatabase extends RoomDatabase {
     }
 
     private static AhoyDatabase buildSecuredDatabase(final Context appContext) {
-        final byte[] passphrase = SQLiteDatabase.getBytes(passphrase(appContext).toCharArray());
+        final byte[] passphrase = SQLiteDatabase.getBytes(PASSPHRASE.toCharArray());
         final SupportFactory factory = new SupportFactory(passphrase);
         return Room.databaseBuilder(appContext, AhoyDatabase.class, DATABASE_NAME)
                 .openHelperFactory(factory)
                 .build();
     }
 
+    // todo remove but check first passphrase
     private static String passphrase(final Context context){
         final MockNeat random = MockNeat.secure();
+        String secret = random.passwords().strong().get();
         SharedPreferences sharedPreferences = PreferencesRepository.prefs(context);
-        return sharedPreferences.getString(SEC_DB_SECRET, random.passwords().strong().get());
+        if (!sharedPreferences.contains(SEC_DB_SECRET)){
+            sharedPreferences.edit().putString(SEC_DB_SECRET, secret).apply();
+        }
+        return sharedPreferences.getString(SEC_DB_SECRET, secret);
     }
 }

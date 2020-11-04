@@ -23,6 +23,7 @@ android {
             }
         }
         buildConfigField("String", "apikey", ahoyEnv['apikey'])
+        buildConfigField("String", "dbsecret", ahoyEnv['dbsecret'])
     }
     buildTypes {
         release {
