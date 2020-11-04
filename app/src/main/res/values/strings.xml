@@ -56,7 +56,8 @@
     <!-- Events: Create Event -->
     <string name="events_create_nav_title" translatable="false">Event</string>
     <string name="events_create_title">New Event</string>
-    <string name="events_create_form_title">Title</string>
+    <string name="events_create_description">You can still create %1$d events, then you have to buy a new event.</string>
+    <string name="events_create_form_title">Event title</string>
     <string name="events_create_form_date">Event date</string>
     <string name="events_create_form_button_create">Create</string>
     <!-- Events: Purchase Event -->

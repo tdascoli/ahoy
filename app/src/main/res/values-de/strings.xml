@@ -25,7 +25,7 @@
     <string name="main_home_event_guests">Gäste</string>
     <string name="events_create_title">Neuer Event</string>
     <string name="events_create_form_date">Event Datum</string>
-    <string name="events_create_form_title">Titel</string>
+    <string name="events_create_form_title">Event Titel</string>
     <string name="events_create_form_button_create">Erstellen</string>
     <string name="events_register_event_nav_title">Event Anmeldung</string>
     <string name="events_guests_nav_title">Gästeliste</string>
@@ -55,4 +55,9 @@
     <string name="main_events_title">Aktuelle, vergangene und zukünftige Events</string>
     <string name="main_home_event_qrcode_image">QRCode mit URL zur Anmeldung für die Veranstaltung</string>
     <string name="events_buy_title">Event kaufen</string>
+    <string name="shortcut_scanning_title">Event Barcode scannen</string>
+    <string name="shortcut_scanning_disabled">Scannen von Event Barcodes ist deaktiviert</string>
+    <string name="shortcut_event_title">Neuer Event erstellen</string>
+    <string name="shortcut_event_disabled">Erstellen von Events ist deaktiviert</string>
+    <string name="events_create_description">Du kannst noch %1$d Events erstellen, danach musst du einen neuen Event kaufen.</string>
 </resources>
